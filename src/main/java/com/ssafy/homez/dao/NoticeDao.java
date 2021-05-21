@@ -12,35 +12,35 @@ import com.ssafy.homez.dto.NoticeParamDto;
 @Mapper
 public interface NoticeDao {
 	
-	public NoticeDto NoticeDetail(NoticeParamDto NoticeParamDto);
-	public List<NoticeFileDto> NoticeDetailFileList(int noticeNo);
+	public NoticeDto noticeDetail(NoticeParamDto noticeParamDto);
+	public List<NoticeFileDto> noticeDetailFileList(int noticeNo);
 	
 	// map - Dto
-	public int NoticeMemberReadCount(NoticeParamDto NoticeParamDto); 
+	public int noticeMemberReadCount(NoticeParamDto noticeParamDto); 
 	
 	// map - @param
-	public int NoticeMemberReadInsert(
+	public int noticeMemberReadInsert(
 			@Param("noticeNo") int noticeNo, 
-			@Param("noticeAuthor") int noticeAuthor ); 
+			@Param("noticeAuthor") String noticeAuthor ); 
 	
-	public int NoticeReadCountUpdate(int noticeNo);
+	public int noticeReadCountUpdate(int noticeNo);
 	
 	
-	public int NoticeDelete(int noticeNo);	
-	public int NoticeFileDelete(int noticeNo);
-	public List<String> NoticeFileUrlDeleteList(int noticeNo);
-	public int NoticeReadCountDelete(int noticeNo);
+	public int noticeDelete(int noticeNo);	
+	public int noticeFileDelete(int noticeNo);
+	public List<String> noticeFileUrlDeleteList(int noticeNo);
+	public int noticeReadCountDelete(int noticeNo);
 	
-	public int NoticeInsert(NoticeDto noticeDto);
-	public int NoticeFileInsert(NoticeFileDto noticeFileDto);
+	public int noticeInsert(NoticeDto noticeDto);
+	public int noticeFileInsert(NoticeFileDto noticeFileDto);
 	
-	public List<NoticeDto> NoticeList(NoticeParamDto noticeParamDto);
-	public int NoticeListTotalCount();
+	public List<NoticeDto> noticeList(NoticeParamDto noticeParamDto);
+	public int noticeListTotalCount();
 	
-	public List<NoticeDto> NoticeListSearchWord(NoticeParamDto noticeParamDto);
-	public int NoticeListSearchWordTotalCount(NoticeParamDto noticeParamDto);
+	public List<NoticeDto> noticeListSearchWord(NoticeParamDto noticeParamDto);
+	public int noticeListSearchWordTotalCount(NoticeParamDto noticeParamDto);
 	
 
-	public int NoticeUpdate(NoticeDto noticeDto);
+	public int noticeUpdate(NoticeDto noticeDto);
 	
 }

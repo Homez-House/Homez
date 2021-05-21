@@ -1,5 +1,7 @@
 package com.ssafy.homez.dto;
 
+import java.util.List;
+
 public class NoticeDto {
 	private int noticeNo;
 	private String noticeAuthor;
@@ -7,7 +9,9 @@ public class NoticeDto {
 	private String noticeContent;
 	private String noticeRegdate;
 	private int noticeReadCnt;
-
+	
+	private List<NoticeFileDto> fileList;
+	
 	public int getNoticeNo() {
 		return noticeNo;
 	}
@@ -55,7 +59,15 @@ public class NoticeDto {
 	public void setNoticeReadCnt(int noticeReadCnt) {
 		this.noticeReadCnt = noticeReadCnt;
 	}
-
+	
+	public List<NoticeFileDto> getFileList() {
+		return fileList;
+	}
+	
+	public void setFileList(List<NoticeFileDto> fileList) {
+		this.fileList = fileList;
+	}
+	
 	@Override
 	public String toString() {
 		return "NoticeDto [noticeNo=" + noticeNo + ", noticeAuthor=" + noticeAuthor + ", noticeTitle=" + noticeTitle
