@@ -6,4 +6,6 @@
     <select id="list" resultType="com.ssafy.homez.dto.MemberDto">
         select * from users
     </select>
+    
+    <insert id=""></insert>
 </mapper>
