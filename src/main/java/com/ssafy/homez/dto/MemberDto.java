@@ -8,9 +8,12 @@ public class MemberDto {
 	private String memberInterestArea;
 	private String memberJoindate;
 	private String memberProfile;
-	private String memberGender;
-	private String memberAge;
+	private String memberGender; // 성별 구분
+	private String memberAge; // 연령대 구분
+	
+	//회원 구분
 	private String memberType;
+	private String memberTypeName;
 
 	public String getMemberId() {
 		return memberId;
@@ -65,7 +68,11 @@ public class MemberDto {
 	}
 
 	public void setMemberProfile(String memberProfile) {
-		this.memberProfile = memberProfile;
+		if( memberProfile == null || "null".equals(memberProfile) || "".equals(memberProfile)) {
+			this.memberProfile = "/img/noProfile.png";
+		}else {
+			this.memberProfile = memberProfile;
+		}
 	}
 
 	public String getMemberGender() {
@@ -84,20 +91,13 @@ public class MemberDto {
 		this.memberAge = memberAge;
 	}
 
-	public String getMemberType() {
-		return memberType;
-	}
-
-	public void setMemberType(String memberType) {
-		this.memberType = memberType;
-	}
-
 	@Override
 	public String toString() {
-		return "Member [memberId=" + memberId + ", memberName=" + memberName + ", memberPwd=" + memberPwd
+		return "MemberDto [memberId=" + memberId + ", memberName=" + memberName + ", memberPwd=" + memberPwd
 				+ ", memberEmail=" + memberEmail + ", memberInterestArea=" + memberInterestArea + ", memberJoindate="
 				+ memberJoindate + ", memberProfile=" + memberProfile + ", memberGender=" + memberGender
-				+ ", memberAge=" + memberAge + ", memberType=" + memberType + "]";
-	}
+				+ ", memberAge=" + memberAge + ", memberType=" + memberType + ", memberTypeName=" + memberTypeName
+				+ "]";
+	}	
 
 }
