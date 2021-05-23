@@ -2,44 +2,46 @@ package com.ssafy.homez.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ssafy.homez.dao.MemberDao;
 import com.ssafy.homez.dto.MemberDto;
 
+@Service
 public class MemberServiceImpl implements MemberService{
+	
+	@Autowired
+	MemberDao memberDao;
 
 	@Override
-	public MemberDto login(String userEmail) {
-		// TODO Auto-generated method stub
-		return null;
+	public MemberDto login(String userId) {
+		return memberDao.login(userId);
 	}
 
 	@Override
 	public List<MemberDto> list() {
-		// TODO Auto-generated method stub
-		return null;
+		return memberDao.list();
 	}
 
 	@Override
 	public int insert(MemberDto dto) {
-		// TODO Auto-generated method stub
-		return 0;
+		return memberDao.insert(dto);
 	}
 
 	@Override
 	public int update(MemberDto dto) {
-		// TODO Auto-generated method stub
-		return 0;
+		return memberDao.update(dto);
 	}
 
 	@Override
-	public int delete(int id) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int delete(String memberId) {
+		return memberDao.delete(memberId);
 	}
 
 	@Override
-	public MemberDto detail(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public MemberDto detail(String memberId) {
+		return memberDao.detail(memberId);
 	}
 
 }

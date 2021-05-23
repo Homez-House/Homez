@@ -10,8 +10,8 @@ public class MemberDto {
 	private String memberProfile;
 	private String memberGender; // 성별 구분
 	private String memberAge; // 연령대 구분
-	
-	//회원 구분
+
+	// 회원 구분
 	private String memberType;
 	private String memberTypeName;
 
@@ -64,15 +64,13 @@ public class MemberDto {
 	}
 
 	public String getMemberProfile() {
-		return memberProfile;
+		if (memberProfile == null || "null".equals(memberProfile) || "".equals(memberProfile)) 
+			this.memberProfile = "/img/noProfile.png";
+		return this.memberProfile;
 	}
 
 	public void setMemberProfile(String memberProfile) {
-		if( memberProfile == null || "null".equals(memberProfile) || "".equals(memberProfile)) {
-			this.memberProfile = "/img/noProfile.png";
-		}else {
-			this.memberProfile = memberProfile;
-		}
+		this.memberProfile = memberProfile;
 	}
 
 	public String getMemberGender() {
@@ -98,6 +96,6 @@ public class MemberDto {
 				+ memberJoindate + ", memberProfile=" + memberProfile + ", memberGender=" + memberGender
 				+ ", memberAge=" + memberAge + ", memberType=" + memberType + ", memberTypeName=" + memberTypeName
 				+ "]";
-	}	
+	}
 
 }

@@ -2,17 +2,19 @@ package com.ssafy.homez.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import com.ssafy.homez.dto.MemberDto;
 
-
+@Mapper
 public interface MemberDao {
 	
-	public MemberDto login(String userEmail);
+	public MemberDto login(String memberId);
 	
 	public List<MemberDto> list();
 	public int insert(MemberDto dto);
 	public int update(MemberDto dto);
-	public int delete(int id);
-	public MemberDto detail(int id);
+	public int delete(String memberId);
+	public MemberDto detail(String memberId);
 	
 }

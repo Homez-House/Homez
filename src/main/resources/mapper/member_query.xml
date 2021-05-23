@@ -4,11 +4,20 @@
 <mapper namespace="com.ssafy.homez.dao.MemberDao">
     
     <insert id="insert" parameterType="com.ssafy.homez.dto.MemberDto">
-    	insert into member (member_id, member_name, member_pwd, member_email, member_interest_area, member_joindate, member_profile, member_gender, member_age, member_type)
-    	values (#{memberId}, #{memberName}, #{memberPwd}, #{memberInterestArea}, now(), #{memberProfile}, #{memberGender}, #{memberAge}, #{memberType})
+    	insert into 
+    	member (member_id, member_name, member_pwd, member_email, member_interest_area, member_joindate, member_profile, member_gender, member_age, member_type)
+    	values (#{memberId}, #{memberName}, #{memberPwd}, #{memberEmail}, #{memberInterestArea}, now(), #{memberProfile}, #{memberGender}, #{memberAge}, "002")
     </insert>
     
     <select id="list" resultType="com.ssafy.homez.dto.MemberDto">
         select * from member
+    </select>
+    
+    <update id="update" ></update>
+    
+    <select id="detail" resultType="com.ssafy.homez.dto.MemberDto" parameterType="String">
+        select *
+          from member 
+         where member_id = #{memberId} 
     </select>
 </mapper>
