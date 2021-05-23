@@ -13,7 +13,22 @@
         select * from member
     </select>
     
-    <update id="update" ></update>
+    <update id="update" parameterType="com.ssafy.homez.dto.MemberDto">
+    	update member 
+    	   set member_name = #{memberName},
+    			member_pwd = #{memberPwd},
+    			member_email = #{memberEmail},
+    			member_interest_area = #{memberInterestArea},
+    			member_profile = #{memberProfile},
+    			member_gender = #{memberGender},
+    			member_age = #{memberAge}
+    	 where member_id = #{memberId} 
+    </update>
+    
+    <delete id="delete">
+    	delete from member
+    	 where member_id = #{memberId}
+    </delete>
     
     <select id="detail" resultType="com.ssafy.homez.dto.MemberDto" parameterType="String">
         select *
