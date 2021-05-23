@@ -2,6 +2,7 @@ package com.ssafy.homez.config;
 
 import static springfox.documentation.builders.PathSelectors.regex;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -9,9 +10,16 @@ import java.util.Set;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.google.common.base.Predicate;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -21,6 +29,7 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.service.ResponseMessage;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.json.Json;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
@@ -78,6 +87,27 @@ public class SwaggerConfiguration {
 				.licenseUrl("https://www.ssafy.com/ksp/jsp/swp/etc/swpPrivacy.jsp")
 				.version("1.0").build();
 
+	}
+	
+	@Bean
+	public GsonHttpMessageConverter gsonHttpMessageConverter() {
+	    GsonHttpMessageConverter converter = new GsonHttpMessageConverter();
+	    converter.setGson(gson());
+	    return converter;
+	}
+
+	private Gson gson() {
+	    final GsonBuilder builder = new GsonBuilder();
+	    builder.registerTypeAdapter(Json.class, new SpringfoxJsonToGsonAdapter());
+	    return builder.create();
+	}
+
+	public class SpringfoxJsonToGsonAdapter implements JsonSerializer<Json> {
+
+		@Override
+		public JsonElement serialize(Json src, Type typeOfSrc, JsonSerializationContext context) {
+			return JsonParser.parseString(src.value());
+		} 
 	}
 
 }
