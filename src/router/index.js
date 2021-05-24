@@ -9,6 +9,7 @@ import Login from '@/components/Login.vue';
 import MainContent from '@/components/MainContent.vue';
 import MemberFind from '@/components/MemberFind.vue';
 import Mypage from '@/components/Mypage.vue';
+import MypageModify from '@/components/MypageModify.vue';
 import Notice from '@/components/Notice.vue';
 import Signup from '@/components/Signup.vue';
 
@@ -21,6 +22,7 @@ export default new VueRouter({
     { path: '/login', name: 'Login', component: Login },
     { path: '/find', name: 'MemberFind', component: MemberFind },
     { path: '/mypage', name: 'Mypage', component: Mypage },
+    { path: '/modify', name: 'MypageModify', component: MypageModify },
     { path: '/signup', name: 'Signup', component: Signup }
   ],
 });

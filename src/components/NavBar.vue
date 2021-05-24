@@ -42,24 +42,36 @@
           <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
             <div class="input-group"></div>
           </div>
-          <router-link
-            to="/login"
-            class="nav-icon position-relative text-decoration-none"
-          >
-            <i class="fas fa-sign-in-alt"></i>
-            <span
-              class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"
-            ></span>
-          </router-link>
-          <router-link
-            to="/signup"
-            class="nav-icon position-relative text-decoration-none"
-          >
-            <i class="fas fa-user-plus"></i>
-            <span
-              class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"
-            ></span>
-          </router-link>
+          <div v-if="$store.state.login.isLogin">
+            <a class="nav-icon position-relative text-decoration-none pointer" @click="logout" href="">
+                <i class="fas fa-sign-out-alt"></i>
+                <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
+            </a>
+            <router-link class="nav-icon position-relative text-decoration-none" to="/mypage">
+                <i class="fas fa-address-card"></i>
+                <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
+            </router-link>
+          </div>
+          <div v-else>
+            <router-link
+              to="/login"
+              class="nav-icon position-relative text-decoration-none"
+            >
+              <i class="fas fa-sign-in-alt"></i>
+              <span
+                class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"
+              ></span>
+            </router-link>
+            <router-link
+              to="/signup"
+              class="nav-icon position-relative text-decoration-none"
+            >
+              <i class="fas fa-user-plus"></i>
+              <span
+                class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"
+              ></span>
+            </router-link>
+          </div>
         </div>
       </div>
     </div>
@@ -68,10 +80,39 @@
 </template>
 
 <script>
+import http from "@/common/axios.js";
+
 export default {
   name: "NavBar",
+  methods: {
+    logout(){
+      http.get("/logout").then(({data})=>{
+        //alert("로그아웃 성공!");
+        console.log("Logout : "+ data);
+      })
+    }
+  }
 };
 </script>
 
-<style>
+<style scoped>
+/* General */
+.logo { font-weight: 500 !important;}
+.text-warning {  color: #ede861 !important;}
+.text-muted { color: #bcbcbc !important;}
+.text-success { color: #59ab6e !important;}
+.text-light { color: #cfd6e1 !important;}
+.bg-dark { background-color: #212934 !important;}
+.bg-light { background-color: #e9eef5 !important;}
+.bg-black { background-color: #1d242d !important;}
+.bg-success { background-color: #59ab6e !important;}
+.btn-success {
+  background-color: #59ab6e !important;
+  border-color: #56ae6c !important;
+}
+.pagination .page-link:hover {color: #000;}
+.pagination .page-link:hover, .pagination .page-link.active {
+  background-color: #69bb7e;
+  color: #fff;
+}
 </style>
