@@ -3,6 +3,8 @@ package com.ssafy.homez.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,17 +38,23 @@ public class MemberController {
 	private static final int FAIL = -1;
 
 	@PostMapping(value = "/login")
-	public ResponseEntity<Integer> login(@RequestBody Map<String, String> map) {
-		String memberId = map.get("id");
-		String memberPwd = map.get("pwd");
-		System.out.println("id : " + memberId + " pwd : " + memberPwd);
+	public ResponseEntity<MemberDto> login(@RequestBody MemberDto dto, HttpSession session) {
+		System.out.println("|| login : "+dto);
 
-		MemberDto dto = memberService.detail(memberId);
-		System.out.println(dto);
+		MemberDto tempDto = memberService.detail(dto.getMemberId());
+		System.out.println(tempDto);
 
-		if (dto != null && dto.getMemberPwd().equals(memberPwd))
-			return new ResponseEntity<Integer>(SUCCESS, HttpStatus.OK);
-		return new ResponseEntity<Integer>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+		if (tempDto != null && tempDto.getMemberPwd().equals(dto.getMemberPwd())) {
+			session.setAttribute("memberDto", tempDto);
+			return new ResponseEntity<MemberDto>(tempDto, HttpStatus.OK);
+		}
+		return new ResponseEntity<MemberDto>(tempDto, HttpStatus.NOT_FOUND);
+	}
+	
+	@GetMapping(value="/logout")
+	public ResponseEntity<Integer> logout(HttpSession session){
+		session.invalidate();
+		return new ResponseEntity<Integer>(SUCCESS, HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/member")

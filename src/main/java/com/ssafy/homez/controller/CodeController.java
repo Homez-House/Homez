@@ -28,12 +28,13 @@ import com.ssafy.homez.service.CodeService;
 		
 		@GetMapping(value="/codes")
 		public ResponseEntity<List<CodeDto>> codeList(String groupCode){
-			
+			System.out.println(">>>>>>> codes 접속! : "+groupCode);
 			List<CodeDto> list = service.codeList(groupCode);
-			if( list != null ) {
-				return new ResponseEntity<List<CodeDto>>(list, HttpStatus.OK);
+			for (CodeDto codeDto : list) {
+				System.out.println(codeDto);
 			}
-
+			if( list != null ) 
+				return new ResponseEntity<List<CodeDto>>(list, HttpStatus.OK);
 			return new ResponseEntity<List<CodeDto>>(list, HttpStatus.NOT_FOUND);
 		}
 	}
