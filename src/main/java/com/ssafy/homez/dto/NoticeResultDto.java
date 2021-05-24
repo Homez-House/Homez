@@ -5,9 +5,19 @@ import java.util.List;
 public class NoticeResultDto {
 	private int noticeResult;
 	private NoticeDto noticeDto;
-	private List<NoticeDto> noticelist;
+	private List<NoticeDto> noticeList;
 	private int noticeCount;
 
+	private boolean isOwner;
+	
+	public boolean getIsOwner() {
+		return isOwner;
+	}
+	
+	public void setIsOwner(boolean isOwner) {
+		this.isOwner = isOwner;
+	}
+	
 	public int getNoticeResult() {
 		return noticeResult;
 	}
@@ -24,12 +34,12 @@ public class NoticeResultDto {
 		this.noticeDto = noticeDto;
 	}
 
-	public List<NoticeDto> getNoticelist() {
-		return noticelist;
+	public List<NoticeDto> getNoticeList() {
+		return noticeList;
 	}
 
-	public void setNoticelist(List<NoticeDto> noticelist) {
-		this.noticelist = noticelist;
+	public void setNoticeList(List<NoticeDto> noticeList) {
+		this.noticeList = noticeList;
 	}
 
 	public int getNoticeCount() {
@@ -42,8 +52,8 @@ public class NoticeResultDto {
 
 	@Override
 	public String toString() {
-		return "NoticeResultDto [noticeResult=" + noticeResult + ", noticeDto=" + noticeDto + ", noticelist="
-				+ noticelist + ", noticeCount=" + noticeCount + "]";
+		return "NoticeResultDto [noticeResult=" + noticeResult + ", noticeDto=" + noticeDto + ", noticeList="
+				+ noticeList + ", noticeCount=" + noticeCount + "]";
 	}
 
 }

@@ -2,44 +2,45 @@ package com.ssafy.homez.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.ssafy.homez.dto.NoticeDto;
 import com.ssafy.homez.dto.NoticeFileDto;
 import com.ssafy.homez.dto.NoticeParamDto;
 
-
+@Mapper
 public interface NoticeDao {
 	
-	public NoticeDto NoticeDetail(NoticeParamDto NoticeParamDto);
-	public List<NoticeFileDto> NoticeDetailFileList(int NoticeId);
+	public NoticeDto noticeDetail(NoticeParamDto noticeParamDto);
+	public List<NoticeFileDto> noticeDetailFileList(int noticeNo);
 	
 	// map - Dto
-	public int NoticeUserReadCount(NoticeParamDto NoticeParamDto); 
+	public int noticeMemberReadCount(NoticeParamDto noticeParamDto); 
 	
 	// map - @param
-	public int NoticeUserReadInsert(
-			@Param("NoticeId") int NoticeId, 
-			@Param("userSeq") int userSeq ); 
+	public int noticeMemberReadInsert(
+			@Param("noticeNo") int noticeNo, 
+			@Param("noticeAuthor") String noticeAuthor ); 
 	
-	public int NoticeReadCountUpdate(int NoticeId);
+	public int noticeReadCountUpdate(int noticeNo);
 	
 	
-	public int NoticeDelete(int NoticeId);	
-	public int NoticeFileDelete(int NoticeId);
-	public List<String> NoticeFileUrlDeleteList(int NoticeId);
-	public int NoticeReadCountDelete(int NoticeId);
+	public int noticeDelete(int noticeNo);	
+	public int noticeFileDelete(int noticeNo);
+	public List<String> noticeFileUrlDeleteList(int noticeNo);
+	public int noticeReadCountDelete(int noticeNo);
 	
-	public int NoticeInsert(NoticeDto dto);
-	public int NoticeFileInsert(NoticeFileDto dto);
+	public int noticeInsert(NoticeDto noticeDto);
+	public int noticeFileInsert(NoticeFileDto noticeFileDto);
 	
-	public List<NoticeDto> NoticeList(NoticeParamDto NoticeParamDto);
-	public int NoticeListTotalCount();
+	public List<NoticeDto> noticeList(NoticeParamDto noticeParamDto);
+	public int noticeListTotalCount();
 	
-	public List<NoticeDto> NoticeListSearchWord(NoticeParamDto NoticeParamDto);
-	public int NoticeListSearchWordTotalCount(NoticeParamDto NoticeParamDto);
+	public List<NoticeDto> noticeListSearchWord(NoticeParamDto noticeParamDto);
+	public int noticeListSearchWordTotalCount(NoticeParamDto noticeParamDto);
 	
 
-	public int NoticeUpdate(NoticeDto dto);
+	public int noticeUpdate(NoticeDto noticeDto);
 	
 }

@@ -4,7 +4,7 @@ public class NoticeFileDto {
 	private int fileId;
 	private int noticeNo;
 	private String fileName;
-	private int fileSize;
+	private long fileSize;
 	private String fileContentType;
 	private String fileUrl;
 	private String regDate;
@@ -33,11 +33,11 @@ public class NoticeFileDto {
 		this.fileName = fileName;
 	}
 
-	public int getFileSize() {
+	public long getFileSize() {
 		return fileSize;
 	}
 
-	public void setFileSize(int fileSize) {
+	public void setFileSize(long fileSize) {
 		this.fileSize = fileSize;
 	}
 
