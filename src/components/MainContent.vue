@@ -3,7 +3,7 @@
         <!-- Start Banner Hero -->
         <div>
             <video id="video" muted autoplay loop style="width: 100%;">
-                <source :src="'../assets/video/video' + VideoNum + '.mp4'" type="video/mp4" />
+                <source :src="'../video/video' + VideoNum + '.mp4'" type="video/mp4" />
                 <strong>Your browser does not support the video tag.</strong>
                 
             </video>
