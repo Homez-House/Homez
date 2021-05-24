@@ -6,11 +6,14 @@
 	<select id="getGugunList" resultType="map">
 		 SELECT GUGUN_CODE, GUGUN_NAME
 		   FROM GUGUN_CODE
+		  ORDER BY GUGUN_NAME ASC
 	</select>
 	
-	<select id="getDongList" resultType="map">
+	<select id="getDongList" resultType="map" parameterType="String">
 		 SELECT DONG_CODE, DONG_NAME, GUGUN_CODE
 		   FROM DONG_CODE
+		  WHERE GUGUN_CODE = #{gugunCode}
+		  ORDER BY DONG_NAME ASC
 	</select>
 	
 	<select id="searchByDong" parameterType="com.ssafy.homez.dto.HouseParamDto" resultType="com.ssafy.homez.dto.HouseDto">

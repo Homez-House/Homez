@@ -7,22 +7,29 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.homez.dto.HouseDto;
 import com.ssafy.homez.dto.HouseParamDto;
 import com.ssafy.homez.service.HouseService;
 
+// VUE cli mode 개발 대응
+@CrossOrigin(origins ="http://localhost:5500", allowCredentials="true", allowedHeaders="*",
+		methods= {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT, RequestMethod.HEAD, RequestMethod.OPTIONS}
+)
 @RestController
 public class HouseController {
 	
 	@Autowired
 	HouseService houseService;
 	
-	@GetMapping(value="gugun")
-	public ResponseEntity<List<Map>> getGugunList(){
+	@GetMapping(value="/gugun")
+	public ResponseEntity<List<Map<String, String>>> getGugunList(){
+		System.out.println("|| gugun 리스트 확인하기");
 		List<Map<String, String>> list = null;
 		
 		list = houseService.getGugunList();
@@ -34,11 +41,12 @@ public class HouseController {
 			}
 			System.out.println();
 		}
-		return new ResponseEntity<List<Map>>(HttpStatus.OK);
+		return new ResponseEntity<List<Map<String, String>>>(list, HttpStatus.OK);
 	}
 	
-	@GetMapping(value="gugun/{gugunCode}")
-	public ResponseEntity<List<Map>> getDongList(@PathVariable String gugunCode){
+	@GetMapping(value="/gugun/{gugunCode}")
+	public ResponseEntity<List<Map<String, String>>> getDongList(@PathVariable String gugunCode){
+		System.out.println("|| gugunCode를 기반으로 dong 리스트 확인하기 : " + gugunCode);
 		List<Map<String, String>> list = null;
 		
 		list = houseService.getDongList(gugunCode);
@@ -51,7 +59,7 @@ public class HouseController {
 			System.out.println();
 		}
 		
-		return new ResponseEntity<List<Map>>(HttpStatus.OK);
+		return new ResponseEntity<List<Map<String, String>>>(list, HttpStatus.OK);
 	}
 	
 	
