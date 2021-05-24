@@ -1,32 +1,35 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
+    <top-nav></top-nav>
+    <nav-bar></nav-bar>
+    <router-view></router-view>
+    <footer-bar></footer-bar>
   </div>
 </template>
 
+<script>
+import TopNav from './components/TopNav.vue';
+import NavBar from './components/NavBar.vue';
+import FooterBar from './components/FooterBar.vue';
+
+export default {
+  name: 'App',
+  components :{
+    TopNav,
+    NavBar,
+    FooterBar,
+  },
+}
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+    @import "./assets/css/bootstrap.min.css";
+    @import "./assets/css/custom.css";
+    @import "./assets/css/fontawesome.css";
+    @import "./assets/css/fontawesome.min.css";
+    @import "./assets/css/slick-theme.css";
+    @import "./assets/css/slick-theme.min.css";
+    @import "./assets/css/slick.min.css";
+    @import "./assets/css/templatemo.css";
+    @import "./assets/css/templatemo.min.css";
 </style>
