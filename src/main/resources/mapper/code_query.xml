@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.ssafy.homez.dao.CodeDao">
+
+	<select id="codeList" parameterType="string" resultType="com.ssafy.homez.dto.CodeDto">
+		SELECT code, code_name
+		  FROM code 
+		 WHERE group_code = #{groupCode}
+	</select>
+
+</mapper>

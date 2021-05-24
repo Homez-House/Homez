@@ -8,12 +8,18 @@ public class MemberDto {
 	private String memberInterestArea;
 	private String memberJoindate;
 	private String memberProfile;
-	private String memberGender; // 성별 구분
-	private String memberAge; // 연령대 구분
 
 	// 회원 구분
 	private String memberType;
 	private String memberTypeName;
+
+	// 성별 구분
+	private String memberGender;
+	private String memberGenderName;
+
+	// 연령대 구분
+	private String memberAge;
+	private String memberAgeName;
 
 	public String getMemberId() {
 		return memberId;
@@ -64,13 +70,27 @@ public class MemberDto {
 	}
 
 	public String getMemberProfile() {
-		if (memberProfile == null || "null".equals(memberProfile) || "".equals(memberProfile)) 
-			this.memberProfile = "/img/noProfile.png";
-		return this.memberProfile;
+		return memberProfile;
 	}
 
 	public void setMemberProfile(String memberProfile) {
 		this.memberProfile = memberProfile;
+	}
+
+	public String getMemberType() {
+		return memberType;
+	}
+
+	public void setMemberType(String memberType) {
+		this.memberType = memberType;
+	}
+
+	public String getMemberTypeName() {
+		return memberTypeName;
+	}
+
+	public void setMemberTypeName(String memberTypeName) {
+		this.memberTypeName = memberTypeName;
 	}
 
 	public String getMemberGender() {
@@ -81,6 +101,14 @@ public class MemberDto {
 		this.memberGender = memberGender;
 	}
 
+	public String getMemberGenderName() {
+		return memberGenderName;
+	}
+
+	public void setMemberGenderName(String memberGenderName) {
+		this.memberGenderName = memberGenderName;
+	}
+
 	public String getMemberAge() {
 		return memberAge;
 	}
@@ -89,13 +117,21 @@ public class MemberDto {
 		this.memberAge = memberAge;
 	}
 
+	public String getMemberAgeName() {
+		return memberAgeName;
+	}
+
+	public void setMemberAgeName(String memberAgeName) {
+		this.memberAgeName = memberAgeName;
+	}
+
 	@Override
 	public String toString() {
 		return "MemberDto [memberId=" + memberId + ", memberName=" + memberName + ", memberPwd=" + memberPwd
 				+ ", memberEmail=" + memberEmail + ", memberInterestArea=" + memberInterestArea + ", memberJoindate="
-				+ memberJoindate + ", memberProfile=" + memberProfile + ", memberGender=" + memberGender
-				+ ", memberAge=" + memberAge + ", memberType=" + memberType + ", memberTypeName=" + memberTypeName
-				+ "]";
+				+ memberJoindate + ", memberProfile=" + memberProfile + ", memberType=" + memberType
+				+ ", memberTypeName=" + memberTypeName + ", memberGender=" + memberGender + ", memberGenderName="
+				+ memberGenderName + ", memberAge=" + memberAge + ", memberAgeName=" + memberAgeName + "]";
 	}
 
 }
