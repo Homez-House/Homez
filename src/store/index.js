@@ -44,7 +44,7 @@ export default new Vuex.Store({
       noticeRegdate: {},
       noticeReadCnt: 0,
       fileList: [],
-      isOwner: true,
+      isOwner: false,
     },
   },
   mutations: {
