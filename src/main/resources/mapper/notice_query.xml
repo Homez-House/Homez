@@ -28,7 +28,7 @@
 		SELECT n.notice_no, n.notice_author, n.notice_title, n.notice_content, n.notice_regdate, n.notice_read_cnt
 		  FROM NOTICE n
 		 WHERE n.NOTICE_TITLE LIKE CONCAT('%', #{noticeSearchWord} ,'%')
-		 ORDER BY b.notice_no DESC
+		 ORDER BY n.notice_no DESC
 		 LIMIT #{noticeLimit} OFFSET #{noticeOffset}
 	</select>
 	
