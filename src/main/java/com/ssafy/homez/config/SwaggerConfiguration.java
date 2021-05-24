@@ -43,15 +43,16 @@ public class SwaggerConfiguration {
 //	http://localhost:8080/{your-app-root}/swagger-ui.html
 
 	private String version = "V1";
-	private String title = "SSAFY 5th Final Project HOMEZ API " + version;
+	private String title = "SSAFY 5th Final Project HOMEZ API ";
 	
 	@Bean
 	public Docket api() {
 		List<ResponseMessage> responseMessages = new ArrayList<ResponseMessage>();
 		responseMessages.add(new ResponseMessageBuilder().code(200).message("OK !!!").build());
-		responseMessages.add(new ResponseMessageBuilder().code(500).message("서버 문제 발생 !!!").responseModel(new ModelRef("Error")).build());
+		responseMessages.add(new ResponseMessageBuilder().code(500).message("서버 문제 발생 !!!").build());
 		responseMessages.add(new ResponseMessageBuilder().code(404).message("페이지를 찾을 수 없습니다 !!!").build());
-		return new Docket(DocumentationType.SWAGGER_2).consumes(getConsumeContentTypes()).produces(getProduceContentTypes())
+		return new Docket(DocumentationType.SWAGGER_2)
+					.consumes(getConsumeContentTypes()).produces(getProduceContentTypes())
 					.apiInfo(apiInfo()).groupName(version).select()
 					.apis(RequestHandlerSelectors.basePackage("com.ssafy.homez.controller"))
 					.paths(postPaths()).build()
@@ -78,15 +79,14 @@ public class SwaggerConfiguration {
 //		return or(regex("/admin/.*"), regex("/user/.*"));
 		return regex("/.*");
 	}
-
+//
 	private ApiInfo apiInfo() {
 		return new ApiInfoBuilder().title(title)
-				.description("<h3>HOMEZ API Reference for Developers</h3>HOMEZ API<br><img src=\"img/ssafy_logo.png\" width=\"150\">") 
+				.description("<h3>HOMEZ API Reference for Developers</h3>") 
 				.contact(new Contact("SSAFY", "https://edu.ssafy.com", "ssafy@ssafy.com"))
 				.license("SSAFY License")
 				.licenseUrl("https://www.ssafy.com/ksp/jsp/swp/etc/swpPrivacy.jsp")
-				.version("1.0").build();
-
+				.version(version).build();
 	}
 	
 	@Bean

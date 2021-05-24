@@ -10,5 +10,6 @@
 
 	<mappers>
 		<mapper resource="mapper/member_query.xml"/>
+		<mapper resource="mapper/code_query.xml"/>
 	</mappers>
 </configuration>
