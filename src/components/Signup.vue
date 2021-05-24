@@ -49,19 +49,15 @@
                 <div class="row mb-4 form-group">
                     <label class="mb-2">관심지역 <span style="color:red;">*</span></label>
                     <div class="col">
-                        <select class="form-select">
-                            <option selected>구</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                        <select class="form-select" v-model="selectGugun" @change="selectGugunData($event)">
+                            <option selected :value="0" hidden>구</option>
+                            <option v-for="(Gugun, index) in GugunList" :key="index" :value="Gugun.GUGUN_CODE">{{Gugun.GUGUN_NAME}}</option>
                         </select>
                     </div>
                     <div class="col">
-                        <select class="form-select">
-                            <option selected>동</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                        <select class="form-select" v-model="memberInterestArea">
+                            <option selected :value="0" hidden>동</option>
+                            <option v-for="(Dong, index) in DongList" :key="index" :value="Dong.DONG_CODE">{{Dong.DONG_NAME}}</option>
                         </select>
                     </div>
                 </div>
@@ -97,12 +93,17 @@ export default {
             memberGender: '',
             memberAge: '',
             memberEmail: '',
-            memberInterestArea: '',
+            memberInterestArea: '0',
             memberType: '002', // 일반회원 default
 
             // 공통 코드 리스트
             GenderList: [],
             Agelist: [],
+
+            // 구군 리스트
+            GugunList: [],
+            DongList: [],
+            selectGugun:'0'
         }
     },methods:{
         insertFile(fileEvent) {
@@ -113,6 +114,14 @@ export default {
                     console.log(this.memberProfile);
                 }
             }
+        }, selectGugunData(event){
+            this.memberInterestArea = 0;
+            console.log(event.target.value);
+            http.get("/gugun/"+this.selectGugun)
+            .then(({data})=>{
+                this.DongList = data;
+                console.log(data);
+            })
         }
     },created:function(){
         http.get("/codes",{params:{groupCode:"002"}})
@@ -126,6 +135,11 @@ export default {
             this.Agelist = data;
             console.log(this.Agelist);
         });
+
+        http.get("/gugun").then(({data})=>{
+            console.log(data);
+            this.GugunList = data;
+        })
     }
 }
 </script>
