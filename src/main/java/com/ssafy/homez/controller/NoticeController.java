@@ -32,7 +32,7 @@ import io.swagger.annotations.ApiResponses;
 		methods= {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT, RequestMethod.HEAD, RequestMethod.OPTIONS}
 )
 
-@RequestMapping("/notice")
+//@RequestMapping("/notice")
 @Api("공지사항 Controller API V1")
 @RestController
 public class NoticeController {
@@ -46,7 +46,7 @@ public class NoticeController {
 	@ApiOperation(value = "공지사항 목록", notes = "공지사항의 <big>전체목록</big>을 반환해줍니다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "회원목록OK"), @ApiResponse(code = 404, message = "페이지없음"),
 			@ApiResponse(code = 500, message = "서버에러!!") })
-	@GetMapping(value="")
+	@GetMapping(value="/notice")
 	public ResponseEntity<NoticeResultDto> noticeList(NoticeParamDto noticeParamDto){
 		NoticeResultDto noticeResultDto;
 		
@@ -67,7 +67,7 @@ public class NoticeController {
 	@ApiOperation(value = "공지사항 확인", notes = "해당 공지사항글을 확인합니다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "회원목록OK"), @ApiResponse(code = 404, message = "페이지없음"),
 			@ApiResponse(code = 500, message = "서버에러!!") })
-	@GetMapping(value="/{noticeNo}")
+	@GetMapping(value="/notice/{noticeNo}")
 	public ResponseEntity<NoticeResultDto> noticeDetail(@PathVariable(value="noticeNo") int noticeNo, 
 			@RequestParam(value="noticeAuthor") String noticeAuthor,HttpSession session){
 		
@@ -93,7 +93,7 @@ public class NoticeController {
 	@ApiOperation(value = "공지사항 등록", notes = "해당 공지사항글을 등록합니다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "회원목록OK"), @ApiResponse(code = 404, message = "페이지없음"),
 			@ApiResponse(code = 500, message = "서버에러!!") })
-	@PostMapping(value="/")
+	@PostMapping(value="/notice")
 	public ResponseEntity<NoticeResultDto> noticeInsert(NoticeDto noticeDto, MultipartHttpServletRequest request){
 		
 		noticeDto.setNoticeAuthor( ((MemberDto) request.getSession().getAttribute("memberDto")).getMemberId() );
@@ -112,7 +112,7 @@ public class NoticeController {
 	@ApiOperation(value = "공지사항 수정", notes = "해당 공지사항글을 삭제합니다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "회원목록OK"), @ApiResponse(code = 404, message = "페이지없음"),
 			@ApiResponse(code = 500, message = "서버에러!!") })
-	@PostMapping(value="/{noticeNo}")
+	@PostMapping(value="/notice/{noticeNo}")
 	public ResponseEntity<NoticeResultDto> noticeUpdate(NoticeDto noticeDto, MultipartHttpServletRequest request){
 		NoticeResultDto noticeResultDto = noticeService.noticeUpdate(noticeDto, request);
 		noticeDto.setNoticeAuthor( ((MemberDto) request.getSession().getAttribute("memberDto")).getMemberId() );
@@ -127,7 +127,7 @@ public class NoticeController {
 	}
 	
 	// 회원삭제
-	@DeleteMapping(value="/{noticeNo}")
+	@DeleteMapping(value="/notice/{noticeNo}")
 	@ApiOperation(value = "공지사항 삭제", notes = "해당 공지사항글을 삭제합니다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "회원목록OK"), @ApiResponse(code = 404, message = "페이지없음"),
 			@ApiResponse(code = 500, message = "서버에러!!") })

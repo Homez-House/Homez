@@ -27,7 +27,13 @@ public class NoticeServiceImpl implements NoticeService {
 	/* for eclipse development code */
 	// 파일을 업로드할 경로 지정
 //	C:/Users/ahnda/git/final-project/src/main
-	String uploadPath = "C:" + File.separator + "Users" + File.separator + "ahnda" + File.separator
+	
+	
+//	String uploadPath = "C:" + File.separator + "Users" + File.separator + "ahnda" + File.separator
+//			+ "git" + File.separator + "final-project" + File.separator + "src" + File.separator + "main" 
+//			+ File.separator + "resources" + File.separator + "static";
+	
+	String uploadPath = "C:" + File.separator + "Users" + File.separator + "dang0" + File.separator
 			+ "git" + File.separator + "final-project" + File.separator + "src" + File.separator + "main" 
 			+ File.separator + "resources" + File.separator + "static";
 	

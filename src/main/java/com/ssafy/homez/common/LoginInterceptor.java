@@ -19,19 +19,19 @@ public class LoginInterceptor implements HandlerInterceptor{
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		System.out.println(">>>>> " + request.getRequestURI());
         HttpSession session = request.getSession();
-//        MemberDto userDto = (MemberDto) session.getAttribute("userDto");
-//        if( userDto == null ) {
-//        	
-//			Gson gson = new Gson();
-//
-//			JsonObject jsonObject = new JsonObject();
-//			jsonObject.addProperty("result", "login");
-//			
-//			String jsonStr = gson.toJson(jsonObject);
-//			response.getWriter().write(jsonStr);
-//			
-//        	return false;
-//        }
+        MemberDto userDto = (MemberDto) session.getAttribute("memberDto");
+        if( userDto == null ) {
+        	
+			Gson gson = new Gson();
+
+			JsonObject jsonObject = new JsonObject();
+			jsonObject.addProperty("result", "login");
+			
+			String jsonStr = gson.toJson(jsonObject);
+			response.getWriter().write(jsonStr);
+			
+        	return false;
+        }
 
         return true;
     }
