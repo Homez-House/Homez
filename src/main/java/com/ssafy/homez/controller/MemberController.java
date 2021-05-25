@@ -62,8 +62,9 @@ public class MemberController {
 		return new ResponseEntity<List<MemberDto>>(memberService.list(), HttpStatus.OK);
 	}
 
-	@PostMapping(value = "/member/{memberId}")
-	public ResponseEntity<Integer> insert(MemberDto memberDto) {
+	@PostMapping(value = "/member")
+	public ResponseEntity<Integer> insert(@RequestBody MemberDto memberDto) {
+		System.out.println("회원가입 : "+memberDto);
 		MemberDto dto = memberService.detail(memberDto.getMemberId());
 
 		if (dto == null) {
