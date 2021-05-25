@@ -67,7 +67,7 @@ public class HouseController {
 	public ResponseEntity<List<HouseDto>> searchByDong(HouseParamDto houseParamDto) {
 		
 		List<HouseDto> list = null;
-		
+		System.out.println(houseParamDto);
 		if (houseParamDto.getHouseSearchType().equals("dongName")) {
 			list = houseService.searchByDong(houseParamDto);
 		} else if (houseParamDto.getHouseSearchType().equals("aptName")) {
