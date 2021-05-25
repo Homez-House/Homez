@@ -76,15 +76,16 @@ public class MemberController {
 	}
 
 	@PutMapping(value = "/member/{memberId}")
-	public ResponseEntity<Integer> update(@PathVariable String memberId, @RequestBody MemberDto memberDto) {
+	public ResponseEntity<MemberDto> update(@PathVariable String memberId, @RequestBody MemberDto memberDto, HttpSession session) {
 		MemberDto dto = memberService.detail(memberId);
 
 		if (dto != null) {
 			memberService.update(memberDto);
+			session.setAttribute("memberDto", memberDto);
 			System.out.println("|| update : " + memberDto);
-			return new ResponseEntity<Integer>(SUCCESS, HttpStatus.OK);
+			return new ResponseEntity<MemberDto>(memberDto, HttpStatus.OK);
 		} else
-			return new ResponseEntity<Integer>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<MemberDto>(memberDto, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	@DeleteMapping(value="/member/{memberId}")
