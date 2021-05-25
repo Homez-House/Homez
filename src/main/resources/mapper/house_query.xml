@@ -26,7 +26,6 @@
            and dong_code.dong_code = #{houseSearchWord}
            and gugun_code.gugun_code = house_deal.gugun_code
                ORDER BY house_deal.NO
-            LIMIT #{houseLimit} OFFSET #{houseOffset}
     </select>
     
     <select id="searchByAptName" parameterType="com.ssafy.homez.dto.HouseParamDto" resultType="com.ssafy.homez.dto.HouseDto">
