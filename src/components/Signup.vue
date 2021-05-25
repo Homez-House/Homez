@@ -16,17 +16,36 @@
             <div class="col-5">
                 <div class="row mt-4 mb-4 form-group">
                     <label class="mb-2">로그인 정보 <span style="color:red;">*</span></label>
-                    <input v-model="memberId" type="text" class="form-control" placeholder="아이디 : 최소 4글자 이상">
-                    <input v-model="memberPwd" type="password" class="form-control" placeholder="비밀번호 : 최소 8자 이상">
-                    <input v-model="memberPwdMore" type="password" class="form-control" placeholder="비밀번호 확인 : 위와 동일하게 입력">
+                    <!-- ID 정보 -->
+                    <div>
+                        <input v-model="memberId" type="text" class="form-control" placeholder="아이디 : 최소 4글자 이상"
+                                :class="{'is-valid':isIDFocusAndValid, 'is-invalid':isIDFocuseAndInvalid }"
+                                @input="validateID" @focus="isIDFocus=true"/>
+                        <div class="invalid-feedback">올바른 아이디를 입력해 주세요.</div>
+                    </div>
+                    <div>
+                        <input v-model="memberPwd" type="password" class="form-control" placeholder="비밀번호 : 최소 8자 이상"
+                                :class="{'is-valid':isPwdFocusAndValid, 'is-invalid':isPwdFocuseAndInvalid }"
+                                @input="validatePwd" @focus="isPwdFocus=true"/>
+                        <div class="invalid-feedback">올바른 비밀번호를 입력해 주세요.</div>
+                    </div>
+                    <div>
+                        <input v-model="memberPwdMore" type="password" class="form-control" placeholder="비밀번호 확인 : 위와 동일하게 입력"
+                                :class="{'is-valid':isPwdMoreFocusAndValid, 'is-invalid':isPwdMoreFocuseAndInvalid }"
+                                @input="validatePwdMore" @focus="isPwdMoreFocus=true"/>
+                        <div class="invalid-feedback">비밀번호가 일치하지 않습니다.</div>
+                    </div>
                 </div>
                 <div class="row mb-4 form-group">
-                    <label class="mb-2">프로필 사진 <span style="color:red;">*</span></label>
+                    <label class="mb-2">프로필 사진</label>
                     <input @change="insertFile" type="file" class="form-control" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
                 </div>
                 <div class="row mb-4 form-group">
                     <label>이름 <span style="color:red;">*</span></label>
-                    <input v-model="memberName" type="text" class="form-control" placeholder="김싸피">
+                    <input v-model="memberName" type="text" class="form-control" placeholder="김싸피"
+                                :class="{'is-valid':isNameFocusAndValid, 'is-invalid':isNameFocuseAndInvalid }"
+                                @input="validateName" @focus="isNameFocus=true"/>
+                    <div class="invalid-feedback">이름을 입력하세요.</div>
                 </div>
                 <div class="row mb-4 form-group">
                     <label class="mb-2">성별 <span style="color:red;">*</span></label>
@@ -44,7 +63,10 @@
                 </div>
                 <div class="row mb-4 form-group">
                     <label class="mb-2">이메일 <span style="color:red;">*</span></label>
-                    <input type="email" class="form-control" placeholder="ex) welcome@gmail.com" v-model="memberEmail" >
+                    <input type="email" class="form-control" placeholder="ex) welcome@gmail.com" v-model="memberEmail" 
+                                :class="{'is-valid':isEmailFocusAndValid, 'is-invalid':isEmailFocuseAndInvalid }"
+                                @input="validateEmail" @focus="isEmailFocus=true"/>
+                    <div class="invalid-feedback">유효한 이메일을 입력하세요.</div>
                 </div>
                 <div class="row mb-4 form-group">
                     <label class="mb-2">관심지역 <span style="color:red;">*</span></label>
@@ -63,7 +85,7 @@
                 </div>
                 <div class="row justify-content-center">
                     <div class="col text-end">
-                        <button type="button" class="btn btn-success">가입</button>
+                        <button type="button" class="btn btn-success" @click="SingUpBtn">가입</button>
                     </div>
                     <div class="col">
                         <button type="button" class="btn btn-secondary">취소</button>
@@ -88,7 +110,7 @@ export default {
             memberId: '',
             memberPwd: '',
             memberPwdMore: '',
-            memberProfile: '',
+            memberProfile: null,
             memberName: '',
             memberGender: '',
             memberAge: '',
@@ -103,10 +125,62 @@ export default {
             // 구군 리스트
             GugunList: [],
             DongList: [],
-            selectGugun:'0'
+            selectGugun:'0',
+
+            // focus
+            isIDFocus: false,
+            isPwdFocus: false,
+            isPwdMoreFocus: false,
+            isNameFocus: false,
+            isEmailFocus: false,
+
+            // validation
+            isIDValid: false,
+            isPwdValid: false,
+            isPwdMoreValid: false,
+            isNameValid: false,
+            isEmailValid: false,
+        }
+    },computed:{
+        isIDFocusAndValid(){
+            return this.isIDFocus && this.isIDValid;
+        }, isIDFocuseAndInvalid(){
+            return this.isIDFocus && ! this.isIDValid;
+        }, isPwdFocusAndValid(){
+            return this.isPwdFocus && this.isPwdValid;
+        }, isPwdFocuseAndInvalid(){
+            return this.isPwdFocus && ! this.isPwdValid;
+        }, isPwdMoreFocusAndValid(){
+            return this.isPwdMoreFocus && this.isPwdMoreValid;
+        }, isPwdMoreFocuseAndInvalid(){
+            return this.isPwdMoreFocus && ! this.isPwdMoreValid;
+        }, isNameFocusAndValid(){
+            return this.isNameFocus && this.isNameValid;
+        }, isNameFocuseAndInvalid(){
+            return this.isNameFocus && ! this.isNameValid;
+        }, isEmailFocusAndValid(){
+            return this.isEmailFocus && this.isEmailValid;
+        }, isEmailFocuseAndInvalid(){
+            return this.isEmailFocus && ! this.isEmailValid;
         }
     },methods:{
-        insertFile(fileEvent) {
+        validateID(){
+            this.isIDValid = this.memberId.length >= 4 ? true : false;
+            console.log(this.isIDValid);
+        }, validatePwd(){
+            this.isPwdValid = this.memberPwd.length >= 8 ? true : false;
+            console.log(this.isPwdValid);
+        }, validatePwdMore(){
+            this.isPwdMoreValid = (this.memberPwd == this.memberPwdMore) ? true : false;
+            console.log(this.isPwdMoreValid);
+        }, validateName(){
+            this.isNameValid = this.memberName.length > 0 ? true : false;
+            console.log(this.isNameValid);
+        }, validateEmail(){
+            let regexp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+            this.isEmailValid = (regexp.test(this.memberEmail)) ? true : false;
+            console.log(this.isEmailValid);
+        }, insertFile(fileEvent) {
             if( fileEvent.target.files && fileEvent.target.files.length > 0 ){
                 for( var i=0; i<fileEvent.target.files.length; i++ ){
                     const file = fileEvent.target.files[i];
@@ -122,7 +196,45 @@ export default {
                 this.DongList = data;
                 console.log(data);
             })
-        }
+        }, SingUpBtn(){
+            if (!this.isIDValid || !this.isPwdValid || !this.isPwdMoreValid || !this.isNameValid || !this.isEmailValid){
+                this.$alertify.alert('회원가입 불가', '유효한 값을 넣었는지 확인해주세요!');
+                return;
+            } else if (this.memberGender == ''){
+                this.$alertify.alert('회원가입 불가', '성별을 체크해주세요!');
+                return;
+            } else if (this.memberAge == ''){
+                this.$alertify.alert('회원가입 불가', '연령대를 체크해주세요!');
+                return;
+            } else if (this.memberInterestArea == 0){
+                this.$alertify.alert('회원가입 불가', '관심지역을 등록해주세요!');
+                return;
+            }
+
+            http.post("/member", {
+                memberId:this.memberId, 
+                memberPwd:this.memberPwd,
+                memberProfile:this.memberProfile,
+                memberName:this.memberName,
+                memberGender:this.memberGender,
+                memberAge:this.memberAge,
+                memberEmail:this.memberEmail,
+                memberInterestArea:this.memberInterestArea,
+                memberType:this.memberType
+            }).then(({data})=>{
+                console.log("SignUp Success : " + data);
+                let $this = this;
+                this.$alertify.alert(
+                    '회원가입을 축하합니다. 로그인 페이지로 이동합니다',
+                    function() {
+                        $this.$router.push("/login");
+                    }
+                );  
+            }).catch(error=>{
+                console.log("Error : "+error);
+                this.$alertify.error('문제가 발생했습니다.');          
+            });
+        }, 
     },created:function(){
         http.get("/codes",{params:{groupCode:"002"}})
         .then(({data})=>{
