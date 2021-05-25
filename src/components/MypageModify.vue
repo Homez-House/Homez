@@ -11,7 +11,12 @@
         <div class="col">
           <div class="row mb-4 form-group">
             <label class="mb-2 fw-bold">프로필 사진</label>
-            <input type="file" class="form-control" aria-describedby="inputGroupFileAddon04" aria-label="Upload"/>
+            <input
+              type="file"
+              class="form-control"
+              aria-describedby="inputGroupFileAddon04"
+              aria-label="Upload"
+            />
           </div>
           <div class="row mb-4 form-group">
             <label class="mb-2 col-3 fw-bold">아이디 </label>
@@ -34,6 +39,7 @@
             </div>
           </div>
           <div class="row mb-4 form-group">
+
             <label class="mb-2 fw-bold">연령대</label>
             <div class="col-4 form-check form-check-inline" v-for="(code, index) in Agelist" :key="index" >
               <input class="form-check-input" type="radio" :value="code.code" v-model="memberAge" />
@@ -47,18 +53,34 @@
         <div class="row mb-4 form-group">
             <label class="mb-2 fw-bold">관심지역 <span style="color:red;">*</span></label>
             <div class="col">
-                <select class="form-select" v-model="selectGugun" @change="selectGugunData($event)">
-                    <option selected :value="0" hidden>구</option>
-                    <option v-for="(Gugun, index) in GugunList" :key="index" :value="Gugun.GUGUN_CODE">{{Gugun.GUGUN_NAME}}</option>
-                </select>
+              <select
+                class="form-select"
+                v-model="selectGugun"
+                @change="selectGugunData($event)"
+              >
+                <option selected :value="0" hidden>구</option>
+                <option
+                  v-for="(Gugun, index) in GugunList"
+                  :key="index"
+                  :value="Gugun.GUGUN_CODE"
+                >
+                  {{ Gugun.GUGUN_NAME }}
+                </option>
+              </select>
             </div>
             <div class="col">
-                <select class="form-select" v-model="memberInterestArea">
-                    <option selected :value="0" hidden>동</option>
-                    <option v-for="(Dong, index) in DongList" :key="index" :value="Dong.DONG_CODE">{{Dong.DONG_NAME}}</option>
-                </select>
+              <select class="form-select" v-model="memberInterestArea">
+                <option selected :value="0" hidden>동</option>
+                <option
+                  v-for="(Dong, index) in DongList"
+                  :key="index"
+                  :value="Dong.DONG_CODE"
+                >
+                  {{ Dong.DONG_NAME }}
+                </option>
+              </select>
             </div>
-        </div>
+          </div>
           <div class="mb-3 pagination justify-content-center">
             <button type="button" class="btn btn-success">
               <a href="#" style="text-decoration: none; color: white" @click="updateMember">업데이트</a >
@@ -156,8 +178,7 @@ export default {
       console.log(this.GenderList);
     });
 
-    http.get("/codes", { params: { groupCode: "003" } })
-    .then(({ data }) => {
+    http.get("/codes", { params: { groupCode: "003" } }).then(({ data }) => {
       this.Agelist = data;
       console.log(this.Agelist);
     });
@@ -177,5 +198,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

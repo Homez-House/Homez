@@ -53,7 +53,8 @@ export default {
   computed: {
     pageCount: function () {
       return Math.ceil(
-        this.$store.state.notice.totalListItemCount / this.listRowCount
+        this.$store.state.notice.totalListItemCount /
+          this.$store.state.notice.listRowCount
       );
     },
     startPageIndex: function () {
@@ -121,7 +122,7 @@ export default {
       }
     },
     next: function () {
-      if (this.endPageIndex > this.pageCount) {
+      if (this.endPageIndex >= this.pageCount) {
         return false;
       } else {
         return true;
