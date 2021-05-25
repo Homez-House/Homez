@@ -50,6 +50,7 @@ export default new Vuex.Store({
   mutations: {
     // state 변경
     SET_LOGIN(state, payload) {
+      console.log("LOGIN 진행");
       state.login.isLogin = payload.isLogin;
       state.login.memberId = payload.memberId;
       state.login.memberName = payload.memberName;
@@ -61,6 +62,18 @@ export default new Vuex.Store({
       state.login.memberGender = payload.memberGender;
       state.login.memberAge = payload.memberAge;
       state.login.memberType = payload.memberType;
+    },
+
+    SET_UPDATE(state, payload) {
+      console.log("UPDATE 진행");
+      console.log(payload.memberPwd);
+      state.login.memberName = payload.memberName;
+      state.login.memberPwd = payload.memberPwd;
+      state.login.memberEmail = payload.memberEmail;
+      state.login.memberInterestArea = payload.memberInterestArea;
+      state.login.memberProfile = payload.memberProfile;
+      state.login.memberGender = payload.memberGender;
+      state.login.memberAge = payload.memberAge;
     },
 
     SET_NOTICE_LIST(state, list) {
