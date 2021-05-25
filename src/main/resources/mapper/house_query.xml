@@ -1,37 +1,42 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="com.ssafy.homez.dao.HouseDao">
-	
-	<!-- reg_dt : LocalDateTime, check out BoardDto setter  -->
-	<select id="getGugunList" resultType="map">
-		 SELECT GUGUN_CODE, GUGUN_NAME
-		   FROM GUGUN_CODE
-		  ORDER BY GUGUN_NAME ASC
-	</select>
-	
-	<select id="getDongList" resultType="map" parameterType="String">
-		 SELECT DONG_CODE, DONG_NAME, GUGUN_CODE
-		   FROM DONG_CODE
-		  WHERE GUGUN_CODE = #{gugunCode}
-		  ORDER BY DONG_NAME ASC
-	</select>
-	
-	<select id="searchByDong" parameterType="com.ssafy.homez.dto.HouseParamDto" resultType="com.ssafy.homez.dto.HouseDto">
-		SELECT house_deal.no, house_deal.dong_name, house_deal.house_name, house_deal.deal_amount, house_deal.area, 
-				house_deal.deal_year, house_deal.deal_month, house_deal.deal_day, house_info.lat, house_info.lng
-		  FROM house_deal JOIN house_info
-		WHERE house_deal.house_name = house_info.house_name AND house_deal.dong_name = house_info.dong_name And house_deal.dong_name = #{houseSearchWord}
-		ORDER BY HOUSE_DEAL.NO
-		LIMIT #{houseLimit} OFFSET #{houseOffset}
-	</select>
-	
-	<select id="searchByAptName" parameterType="com.ssafy.homez.dto.HouseParamDto" resultType="com.ssafy.homez.dto.HouseDto">
-		SELECT house_deal.no, house_deal.dong_name, house_deal.house_name, house_deal.deal_amount, house_deal.area, 
-				house_deal.deal_year, house_deal.deal_month, house_deal.deal_day, house_info.lat, house_info.lng
-		  FROM house_deal JOIN house_info
-		WHERE house_deal.house_name = house_info.house_name AND house_deal.dong_name = house_info.dong_name AND house_deal.house_name LIKE CONCAT('%',#{houseSearchWord},'%')
-		ORDER BY HOUSE_DEAL.NO
-		LIMIT #{houseLimit} OFFSET #{houseOffset}
-	</select>
+    
+    <!-- reg_dt : LocalDateTime, check out BoardDto setter  -->
+    <select id="getGugunList" resultType="map">
+         SELECT GUGUN_CODE, GUGUN_NAME
+           FROM GUGUN_CODE
+          ORDER BY GUGUN_NAME ASC
+    </select>
+    
+    <select id="getDongList" resultType="map" parameterType="String">
+         SELECT DONG_CODE, DONG_NAME, GUGUN_CODE
+           FROM DONG_CODE
+          WHERE GUGUN_CODE = #{gugunCode}
+          ORDER BY DONG_NAME ASC
+    </select>
+    
+    <select id="searchByDong" parameterType="com.ssafy.homez.dto.HouseParamDto" resultType="com.ssafy.homez.dto.HouseDto">
+        select house_deal.no, gugun_code.gugun_name, house_deal.dong_name, house_deal.house_name, house_deal.deal_amount, house_deal.area, house_deal.deal_year,
+               house_deal.deal_month, house_deal.deal_day, house_info.lat, house_info.lng
+          from house_deal, dong_code, house_info, gugun_code
+         where house_deal.dong_name = dong_code.dong_name
+           and house_info.dong_name = dong_code.dong_name
+           and house_info.house_name = house_deal.house_name
+           and dong_code.dong_code = #{houseSearchWord}
+           and gugun_code.gugun_code = house_deal.gugun_code
+               ORDER BY house_deal.NO
+            LIMIT #{houseLimit} OFFSET #{houseOffset}
+    </select>
+    
+    <select id="searchByAptName" parameterType="com.ssafy.homez.dto.HouseParamDto" resultType="com.ssafy.homez.dto.HouseDto">
+        SELECT house_deal.no, gugun_code.gugun_name, house_deal.dong_name, house_deal.house_name, house_deal.deal_amount, house_deal.area, 
+                house_deal.deal_year, house_deal.deal_month, house_deal.deal_day, house_info.lat, house_info.lng
+          FROM house_deal, house_info, gugun_code
+        WHERE house_deal.house_name = house_info.house_name 
+        AND house_deal.dong_name = house_info.dong_name 
+        AND house_deal.house_name LIKE CONCAT('%',#{houseSearchWord},'%')
+        AND gugun_code.gugun_code = house_deal.gugun_code
+        ORDER BY HOUSE_DEAL.NO
+    </select>
 </mapper>
-
