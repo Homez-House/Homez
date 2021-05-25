@@ -46,6 +46,15 @@ export default new Vuex.Store({
       fileList: [],
       isOwner: false,
     },
+    house: {
+      list: [],
+      limit: 10,
+      offset: 0,
+      listRowCount: 10,
+      pageLinkCount: 10,
+      currentPageIndex: 1,
+      totalListItemCount: 0,
+    },
   },
   mutations: {
     // state 변경
@@ -80,15 +89,36 @@ export default new Vuex.Store({
       state.notice.list = list;
     },
 
+    SET_HOUSE_LIST(state, list) {
+      state.house.list = list;
+    },
+
     SET_NOTICE_TOTAL_LIST_ITEM_COUNT(state, count) {
       state.notice.totalListItemCount = count;
+    },
+
+    SET_HOUSE_TOTAL_LIST_ITEM_COUNT(state, count) {
+      state.house.totalListItemCount = count;
+    },
+    SET_HOUSE_CURRENT_PAGE(state, idx) {
+      state.house.currentPageIndex = idx;
     },
 
     SET_NOTICE_MOVE_PAGE(state, pageIndex) {
       state.notice.offset = (pageIndex - 1) * state.notice.listRowCount;
       state.notice.currentPageIndex = pageIndex;
     },
-
+    SET_HOUSE_MOVE_PAGE(state, pageIndex) {
+      state.house.offset = (pageIndex - 1) * state.house.listRowCount;
+      state.house.currentPageIndex = pageIndex;
+    },
+    SET_HOUSE_LIMIT(state, payload) {
+      state.house.limit =
+        10 -
+        (payload.pageIndex * 10 > payload.length ? payload.pageIndex * 10 - payload.length : 0);
+      console.log(payload.pageIndex * 10 + "=====" + payload.length);
+      console.log(state.house.limit);
+    },
     SET_NOTICE_DETAIL(state, payload) {
       state.notice.noticeNo = payload.noticeNo;
       state.notice.noticeTitle = payload.noticeTitle;

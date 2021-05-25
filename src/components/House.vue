@@ -74,8 +74,11 @@
     </section>
 
     <!-- 검색된 집 리스트 테이블 -->
-    <div class="row" v-show="!isEmptyHouseList">
-      <!-- 클릭했을 때 디테일한 집 정보 -->
+    <div
+      class="row"
+      v-show="!isEmptyHouseList"
+      v-if="houseSet.length == 0 ? false : true"
+    >
       <div class="col-6">
         <table class="table mt text-center table-striped table-hover">
           <thead>
@@ -88,21 +91,27 @@
           </thead>
           <tbody>
             <tr
-              v-for="(houseSetInfo, index) in houseSet"
+              v-for="idx in $store.state.house.limit"
               @click="
                 getHouseDetail(
-                  houseSetInfo.houseName,
-                  houseSetInfo.lat,
-                  houseSetInfo.lng
+                  houseSet[idx - 1 + $store.state.house.offset].houseName,
+                  houseSet[idx - 1 + $store.state.house.offset].lat,
+                  houseSet[idx - 1 + $store.state.house.offset].lng
                 )
               "
-              v-bind:key="index"
+              v-bind:key="idx"
               style="cursor: pointer"
             >
-              <td>{{ index + 1 }}</td>
-              <td>{{ houseSetInfo.gugunName }}</td>
-              <td>{{ houseSetInfo.dongName }}</td>
-              <td>{{ houseSetInfo.houseName }}</td>
+              <td>{{ idx }}</td>
+              <td>
+                {{ houseSet[idx - 1 + $store.state.house.offset].gugunName }}
+              </td>
+              <td>
+                {{ houseSet[idx - 1 + $store.state.house.offset].dongName }}
+              </td>
+              <td>
+                {{ houseSet[idx - 1 + $store.state.house.offset].houseName }}
+              </td>
             </tr>
             <span v-show="isEmptyHouseSet">
               검색결과가 없습니다 ㅠㅠ 😭😭😭
@@ -117,59 +126,65 @@
             있습니다.
           </h2>
         </div>
-
-        <table
-          class="table mt text-center table-striped table-hover"
-          v-show="!isEmptyHouseDetailList"
-        >
-          <thead>
-            <tr>
-              <th scope="col">거래가격</th>
-              <th scope="col">거래년/월/일</th>
-              <th scope="col">실면적</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              v-for="(houseDetailListInfo, index) in houseDetailList"
-              v-bind:key="index"
-            >
-              <td>{{ houseDetailListInfo.dealAmount }}</td>
-              <td>
-                {{
-                  houseDetailListInfo.dealYear +
-                  "/" +
-                  houseDetailListInfo.dealMonth +
-                  "/" +
-                  houseDetailListInfo.dealDay
-                }}
-              </td>
-              <td>{{ houseDetailListInfo.area }}</td>
-            </tr>
-          </tbody>
-        </table>
+        <div style="overflow: auto; width: 100%; height: 350px">
+          <table
+            class="table mt text-center table-striped table-hover"
+            v-show="!isEmptyHouseDetailList"
+          >
+            <thead>
+              <tr>
+                <th scope="col">거래가격</th>
+                <th scope="col">거래년/월/일</th>
+                <th scope="col">실면적</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="(houseDetailListInfo, index) in houseDetailList"
+                v-bind:key="index"
+              >
+                <td>{{ houseDetailListInfo.dealAmount }}</td>
+                <td>
+                  {{
+                    houseDetailListInfo.dealYear +
+                    "/" +
+                    houseDetailListInfo.dealMonth +
+                    "/" +
+                    houseDetailListInfo.dealDay
+                  }}
+                </td>
+                <td>{{ houseDetailListInfo.area }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
+
+    <!-- Pagination -->
+    <pagination v-on:call-parent="movePage"></pagination>
   </div>
 </template>
 
 <script>
 import http from "@/common/axios.js";
+import Pagination from "./HousePagination.vue";
 
 export default {
   name: "House",
+  components: { Pagination },
   data: function () {
     return {
       houseSearchType: "dongName",
       houseSearchWord: "",
       // DB를 통해 전체 불러온 집 리스트
       houseList: [],
+      // 한 페이지 집 리스트
+      housePageList: [],
       // 전체 집 리스트에서 조건에 맞는 검색후, 중복을 제거한 리스트
       houseSet: [],
       // 집 하나 클릭했을 때 상세정보 보여주기 위한 리스트
       houseDetailList: [],
-      houseLimit: 10,
-      houseOffset: 0,
       // 구군 리스트
       gugunList: [],
       // 동리스트
@@ -182,6 +197,18 @@ export default {
     };
   },
   methods: {
+    movePage(pageIndex) {
+      console.log(pageIndex);
+      this.$store.commit("SET_HOUSE_MOVE_PAGE", pageIndex);
+      this.houseDetailList = [];
+      this.setLimit(pageIndex);
+    },
+    setLimit(pageIndex) {
+      this.$store.commit("SET_HOUSE_LIMIT", {
+        pageIndex: pageIndex,
+        length: this.houseSet.length,
+      });
+    },
     setGugunList() {
       http.get("/gugun").then(({ data }) => {
         console.log(data);
@@ -210,8 +237,6 @@ export default {
       http
         .get("/houses", {
           params: {
-            houseLimit: this.houseLimit,
-            houseOffset: this.houseOffset,
             houseSearchType: this.houseSearchType,
             houseSearchWord: this.selectDong,
           },
@@ -220,6 +245,7 @@ export default {
           this.houseList = data;
           this.setHouseSet();
           this.displayMarker();
+          this.$store.commit("SET_HOUSE_CURRENT_PAGE", 1);
         })
         .catch((error) => {
           console.log(error);
@@ -230,8 +256,6 @@ export default {
       http
         .get("/houses", {
           params: {
-            houseLimit: this.houseLimit,
-            houseOffset: this.houseOffset,
             houseSearchType: this.houseSearchType,
             houseSearchWord: this.houseSearchWord,
           },
@@ -315,6 +339,11 @@ export default {
           this.houseSet.push(houseListInfo);
         }
       });
+      this.$store.commit(
+        "SET_HOUSE_TOTAL_LIST_ITEM_COUNT",
+        this.houseSet.length
+      );
+      this.setLimit(1);
     },
     getHouseDetail(houseName, lat, lng) {
       this.houseDetailList = [];
