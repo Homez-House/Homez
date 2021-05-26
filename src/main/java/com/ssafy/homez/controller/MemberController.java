@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.ssafy.homez.dto.MemberDto;
 import com.ssafy.homez.service.MemberService;
@@ -63,12 +64,12 @@ public class MemberController {
 	}
 
 	@PostMapping(value = "/member")
-	public ResponseEntity<Integer> insert(@RequestBody MemberDto memberDto) {
+	public ResponseEntity<Integer> insert(MemberDto memberDto, MultipartHttpServletRequest request) {
 		System.out.println("회원가입 : "+memberDto);
 		MemberDto dto = memberService.detail(memberDto.getMemberId());
 
 		if (dto == null) {
-			memberService.insert(memberDto);
+			memberService.insert(memberDto, request);
 			System.out.println("|| insert : " + memberDto);
 			return new ResponseEntity<Integer>(SUCCESS, HttpStatus.OK);
 		} else
@@ -76,11 +77,11 @@ public class MemberController {
 	}
 
 	@PutMapping(value = "/member/{memberId}")
-	public ResponseEntity<MemberDto> update(@PathVariable String memberId, @RequestBody MemberDto memberDto, HttpSession session) {
+	public ResponseEntity<MemberDto> update(@PathVariable String memberId, MemberDto memberDto, HttpSession session, MultipartHttpServletRequest request) {
 		MemberDto dto = memberService.detail(memberId);
 
 		if (dto != null) {
-			memberService.update(memberDto);
+			memberService.update(memberDto, request);
 			session.setAttribute("memberDto", memberDto);
 			System.out.println("|| update : " + memberDto);
 			return new ResponseEntity<MemberDto>(memberDto, HttpStatus.OK);
