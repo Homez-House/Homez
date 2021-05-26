@@ -20,6 +20,11 @@ public class LoginInterceptor implements HandlerInterceptor{
 		System.out.println(">>>>> " + request.getRequestURI());
         HttpSession session = request.getSession();
         MemberDto userDto = (MemberDto) session.getAttribute("memberDto");
+        
+        if(request.getMethod().equals("OPTIONS")) {
+        	return true;
+        }
+        
         if( userDto == null ) {
         	
 			Gson gson = new Gson();

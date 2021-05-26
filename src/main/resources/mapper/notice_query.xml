@@ -9,7 +9,7 @@
 	
 	<insert id="noticeFileInsert" parameterType="com.ssafy.homez.dto.NoticeFileDto">
 		INSERT INTO NOTICE_FILE ( NOTICE_NO, FILE_NAME, FILE_SIZE, FILE_CONTENT_TYPE, FILE_URL )
-		            VALUES ( #{noticeNo}, #{fileName}, #{fileSize}, #{fileContentType}, now()) )
+		            VALUES ( #{noticeNo}, #{fileName}, #{fileSize}, #{fileContentType}, now())
 	</insert>
 	
 	<!-- reg_dt : LocalDateTime, check out BoardDto setter  -->
