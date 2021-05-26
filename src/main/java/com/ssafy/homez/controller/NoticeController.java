@@ -78,9 +78,9 @@ public class NoticeController {
 		
 		NoticeResultDto noticeResultDto = noticeService.noticeDetail(noticeParamDto);
 		
-//		if( ((MemberDto) session.getAttribute("memberDto")).getMemberId() == noticeResultDto.getNoticeDto().getNoticeAuthor() ) {
-//			noticeResultDto.setIsOwner(true);
-//		}
+		if( ((MemberDto) session.getAttribute("memberDto")).getMemberId().equals(noticeResultDto.getNoticeDto().getNoticeAuthor()) ) {
+			noticeResultDto.setIsOwner(true);
+		}
 				
 		if(noticeResultDto.getNoticeResult() == SUCCESS) {
 			return new ResponseEntity<NoticeResultDto>(noticeResultDto, HttpStatus.OK);
@@ -98,7 +98,7 @@ public class NoticeController {
 		
 		noticeDto.setNoticeAuthor( ((MemberDto) request.getSession().getAttribute("memberDto")).getMemberId() );
 		NoticeResultDto noticeResultDto = noticeService.noticeInsert(noticeDto, request);
-		
+		System.out.println(noticeDto);
 		System.out.println("----------------Insert :" + " " + noticeResultDto);
 		
 		if(noticeResultDto.getNoticeResult() == SUCCESS) {

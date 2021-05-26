@@ -26,16 +26,16 @@ public class NoticeServiceImpl implements NoticeService {
 	
 	/* for eclipse development code */
 	// 파일을 업로드할 경로 지정
-//	C:/Users/ahnda/git/final-project/src/main
+//	C:\Users\ahnda\git\final-project\src\main\resources
 	
 	
-//	String uploadPath = "C:" + File.separator + "Users" + File.separator + "ahnda" + File.separator
-//			+ "git" + File.separator + "final-project" + File.separator + "src" + File.separator + "main" 
-//			+ File.separator + "resources" + File.separator + "static";
-	
-	String uploadPath = "C:" + File.separator + "Users" + File.separator + "dang0" + File.separator
+	String uploadPath = "C:" + File.separator + "Users" + File.separator + "ahnda" + File.separator
 			+ "git" + File.separator + "final-project" + File.separator + "src" + File.separator + "main" 
 			+ File.separator + "resources" + File.separator + "static";
+	
+//	String uploadPath = "C:" + File.separator + "Users" + File.separator + "dang0" + File.separator
+//			+ "git" + File.separator + "final-project" + File.separator + "src" + File.separator + "main" 
+//			+ File.separator + "resources" + File.separator + "static";
 	
 	private static final int SUCCESS = 1;
 	private static final int FAIL = -1;
@@ -78,7 +78,7 @@ public class NoticeServiceImpl implements NoticeService {
 			// 물리적 파일 삭제
 			List<String> fileUrlList = noticeDao.noticeFileUrlDeleteList(noticeNo);
 			for(String fileUrl: fileUrlList) {
-				File file = new File(uploadPath + File.pathSeparator, fileUrl);
+				File file = new File(uploadPath + File.separator, fileUrl);
 				if(file.exists()) {
 					file.delete();
 				}
@@ -160,17 +160,15 @@ public class NoticeServiceImpl implements NoticeService {
 	public NoticeResultDto noticeInsert(NoticeDto noticeDto, MultipartHttpServletRequest request) {
 		
 		NoticeResultDto noticeResultDto = new NoticeResultDto();
-		
 		try {
 			noticeDao.noticeInsert(noticeDto);
 			
 			List<MultipartFile> fileList = request.getFiles("file");
 			
-			File uploadDir = new File(uploadPath + File.pathSeparator + uploadFolder);
+			File uploadDir = new File(uploadPath + File.separator + uploadFolder);
 			if(!uploadDir.exists()) uploadDir.mkdir();
-			
+			System.out.println(uploadDir +" " + (!uploadDir.exists()));
 			for(MultipartFile part: fileList) {
-				
 				int noticeNo = noticeDto.getNoticeNo();
 				String fileName = part.getOriginalFilename();
 				
@@ -195,7 +193,7 @@ public class NoticeServiceImpl implements NoticeService {
 				
 				String noticeFileUrl = uploadFolder + "/" + savingFileName;
 				noticeFileDto.setFileUrl(noticeFileUrl);
-				
+				System.out.println("-----noticeFileDto-----  "+noticeFileDto);
 				noticeDao.noticeFileInsert(noticeFileDto);
 			}
 			noticeResultDto.setNoticeResult(SUCCESS);
@@ -204,7 +202,6 @@ public class NoticeServiceImpl implements NoticeService {
 			e.printStackTrace();
 			noticeResultDto.setNoticeResult(FAIL);
 		}
-		
 		
 		return noticeResultDto;
 	}
