@@ -72,9 +72,9 @@
         <div class="row mb-4 form-group">
           <label class="mb-2">프로필 사진</label>
           <input
-            @change="insertFile"
             type="file"
             class="form-control"
+            id="inputFileUploadInsert"
             aria-describedby="inputGroupFileAddon04"
             aria-label="Upload"
           />
@@ -289,15 +289,6 @@ export default {
       this.isEmailValid = regexp.test(this.memberEmail) ? true : false;
       console.log(this.isEmailValid);
     },
-    insertFile(fileEvent) {
-      if (fileEvent.target.files && fileEvent.target.files.length > 0) {
-        for (var i = 0; i < fileEvent.target.files.length; i++) {
-          const file = fileEvent.target.files[i];
-          this.memberProfile = URL.createObjectURL(file);
-          console.log(this.memberProfile);
-        }
-      }
-    },
     selectGugunData(event) {
       this.memberInterestArea = 0;
       console.log(event.target.value);
@@ -330,17 +321,23 @@ export default {
         return;
       }
 
+      var formData = new FormData();
+      var attachFiles = document.querySelector("#inputFileUploadInsert");
+      formData.append("memberId", this.memberId);
+      formData.append("memberPwd", this.memberPwd);
+      formData.append("memberName", this.memberName);
+      formData.append("memberGender", this.memberGender);
+      formData.append("memberAge", this.memberAge);
+      formData.append("memberEmail", this.memberEmail);
+      formData.append("memberInterestArea", this.memberInterestArea);
+      formData.append("memberType", this.memberType);
+      formData.append("file", attachFiles.files[0]);
+
       http
-        .post("/member", {
-          memberId: this.memberId,
-          memberPwd: this.memberPwd,
-          memberProfile: this.memberProfile,
-          memberName: this.memberName,
-          memberGender: this.memberGender,
-          memberAge: this.memberAge,
-          memberEmail: this.memberEmail,
-          memberInterestArea: this.memberInterestArea,
-          memberType: this.memberType,
+        .post("/member", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data;",
+          },
         })
         .then(({ data }) => {
           console.log("SignUp Success : " + data);

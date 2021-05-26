@@ -6,7 +6,7 @@
       <div class="text-center">
         <img
           style="border-radius: 20px; width: 300px"
-          :src="memberProfile"
+          :src="'http://localhost:8080/' + $store.state.login.memberProfile"
           alt="프로필 사진"
         />
       </div>
@@ -14,12 +14,17 @@
         <div class="col"></div>
         <div class="col">
           <div class="row mb-4 form-group">
+            <div id="imgFileUploadInsertThumbnail" class="thumbnail-wrapper">
+              <!-- vue way img 를 만들어서 append 하지 않고, v-for 로 처리 -->
+              <img v-bind:src="fileUrl" />
+            </div>
             <label class="mb-2 fw-bold">프로필 사진</label>
             <input
               type="file"
               class="form-control"
               aria-describedby="inputGroupFileAddon04"
               aria-label="Upload"
+              id="inputFileUploadInsert"
               @change="insertFile"
             />
           </div>
@@ -157,6 +162,8 @@ export default {
       memberEmail: this.$store.state.login.memberEmail,
       memberInterestArea: this.$store.state.login.memberInterestArea,
 
+      // file url
+      fileUrl: "",
       // 공통 코드 리스트
       GenderList: [],
       Agelist: [],
@@ -172,8 +179,7 @@ export default {
       if (fileEvent.target.files && fileEvent.target.files.length > 0) {
         for (var i = 0; i < fileEvent.target.files.length; i++) {
           const file = fileEvent.target.files[i];
-          this.memberProfile = URL.createObjectURL(file);
-          console.log(this.memberProfile);
+          this.fileUrl = URL.createObjectURL(file);
         }
       }
     },
@@ -194,17 +200,24 @@ export default {
         return;
       }
 
+      var formData = new FormData();
+      var attachFiles = document.querySelector("#inputFileUploadInsert");
+
+      formData.append("memberId", this.memberId);
+      formData.append("memberPwd", this.memberPwd);
+      formData.append("memberName", this.memberName);
+      formData.append("memberGender", this.memberGender);
+      formData.append("memberAge", this.memberAge);
+      formData.append("memberEmail", this.memberEmail);
+      formData.append("memberInterestArea", this.memberInterestArea);
+      formData.append("memberType", this.memberType);
+      formData.append("file", attachFiles.files[0]);
+      console.log(attachFiles.files[0]);
       http
-        .put("/member/" + this.memberId, {
-          memberId: this.memberId,
-          memberPwd: this.memberPwd,
-          memberProfile: this.memberProfile,
-          memberName: this.memberName,
-          memberGender: this.memberGender,
-          memberAge: this.memberAge,
-          memberEmail: this.memberEmail,
-          memberInterestArea: this.memberInterestArea,
-          memberType: this.memberType,
+        .put("/member/" + this.memberId, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data;",
+          },
         })
         .then(({ data }) => {
           console.log("Member Update : " + data);

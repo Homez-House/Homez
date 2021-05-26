@@ -6,7 +6,7 @@
       <div class="text-center">
         <img
           style="border-radius: 20px; width: 300px"
-          :src="$store.state.login.memberProfile"
+          :src="'http://localhost:8080/' + $store.state.login.memberProfile"
           alt="프로필 사진"
         />
       </div>
