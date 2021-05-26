@@ -77,7 +77,7 @@
     <div
       class="row"
       v-show="!isEmptyHouseList"
-      v-if="houseSet.length == 0 ? false : true"
+      v-if="housePageList.length == 0 ? false : true"
     >
       <div class="col-6">
         <table class="table mt text-center table-striped table-hover">
@@ -91,12 +91,12 @@
           </thead>
           <tbody>
             <tr
-              v-for="idx in $store.state.house.limit"
+              v-for="idx in housePageList.length"
               @click="
                 getHouseDetail(
-                  houseSet[idx - 1 + $store.state.house.offset].houseName,
-                  houseSet[idx - 1 + $store.state.house.offset].lat,
-                  houseSet[idx - 1 + $store.state.house.offset].lng
+                  housePageList[idx - 1].houseName,
+                  housePageList[idx - 1].lat,
+                  housePageList[idx - 1].lng
                 )
               "
               v-bind:key="idx"
@@ -104,16 +104,16 @@
             >
               <td>{{ idx }}</td>
               <td>
-                {{ houseSet[idx - 1 + $store.state.house.offset].gugunName }}
+                {{ housePageList[idx - 1].gugunName }}
               </td>
               <td>
-                {{ houseSet[idx - 1 + $store.state.house.offset].dongName }}
+                {{ housePageList[idx - 1].dongName }}
               </td>
               <td>
-                {{ houseSet[idx - 1 + $store.state.house.offset].houseName }}
+                {{ housePageList[idx - 1].houseName }}
               </td>
             </tr>
-            <span v-show="isEmptyHouseSet">
+            <span v-show="isEmptyHousePageList">
               검색결과가 없습니다 ㅠㅠ 😭😭😭
             </span>
           </tbody>
@@ -193,15 +193,21 @@ export default {
       selectDong: "",
       map: null,
       markerPositions: [],
+      infoWindow: [],
       markers: [],
     };
   },
   methods: {
     movePage(pageIndex) {
+      this.housePageList = [];
       console.log(pageIndex);
       this.$store.commit("SET_HOUSE_MOVE_PAGE", pageIndex);
       this.houseDetailList = [];
       this.setLimit(pageIndex);
+      for (var i = 0; i < this.$store.state.house.limit; i++) {
+        this.housePageList.push(this.houseSet[i + (pageIndex - 1) * 10]);
+      }
+      this.displayMarker();
     },
     setLimit(pageIndex) {
       this.$store.commit("SET_HOUSE_LIMIT", {
@@ -264,6 +270,7 @@ export default {
           this.houseList = data;
           this.setHouseSet();
           this.displayMarker();
+          this.$store.commit("SET_HOUSE_CURRENT_PAGE", 1);
         })
         .catch((error) => {
           console.log(error);
@@ -278,24 +285,44 @@ export default {
       this.map = new kakao.maps.Map(container, options);
     },
     setMarkerPositions() {
-      this.houseList.forEach((el) => {
-        if (!([el.lat, el.lng] in this.markerPositions)) {
-          this.markerPositions.push([el.lat, el.lng]);
-        }
+      this.housePageList.forEach((el) => {
+        this.markerPositions.push({
+          content:
+            '<div style="padding: 10px;">' +
+            el.gugunName +
+            " " +
+            el.dongName +
+            " " +
+            el.houseName +
+            '<br><a href="https://map.kakao.com/link/map/' +
+            el.houseName +
+            "," +
+            el.lat +
+            "," +
+            el.lng +
+            '" style="color:blue" target="_blank">지도확대</a> <a href="https://map.kakao.com/link/to/' +
+            +el.houseName +
+            "," +
+            el.lat +
+            "," +
+            el.lng +
+            '" style="color:blue" target="_blank">길찾기</a></div>' +
+            "<br>",
+          latlng: new kakao.maps.LatLng(el.lat, el.lng),
+        });
+        this.markers.push([el.lat, el.lng]);
       });
-      console.log(this.markerPositions);
     },
-
     displayMarker() {
+      this.initMap();
       console.log("------------------------");
       if (this.markers.length > 0) {
         this.markers.forEach((marker) => marker.setMap(null));
       }
       this.setMarkerPositions();
-      const positions = this.markerPositions.map(
+      const positions = this.markers.map(
         (position) => new kakao.maps.LatLng(...position)
       );
-
       if (positions.length > 0) {
         this.markers = positions.map(
           (position) =>
@@ -310,9 +337,58 @@ export default {
           new kakao.maps.LatLngBounds()
         );
         this.map.setBounds(bounds);
-        this.markerPositions = [];
       }
+      console.log("markerPositions: " + this.markerPositions);
+      for (var i = 0; i < this.markerPositions.length; i++) {
+        // 마커를 생성합니다
+        var marker = new kakao.maps.Marker({
+          map: this.map, // 마커를 표시할 지도
+          position: this.markerPositions[i].latlng, // 마커의 위치
+        });
+        var isRemovable = true;
+        // 마커에 표시할 인포윈도우를 생성합니다
+        var infowindow = new kakao.maps.InfoWindow({
+          content: this.markerPositions[i].content, // 인포윈도우에 표시할 내용
+          removable: isRemovable,
+        });
+
+        // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+        // 이벤트 리스너로는 클로저를 만들어 등록합니다
+        // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+        kakao.maps.event.addListener(
+          marker,
+          "click",
+          this.makeClickListener(this.map, marker, infowindow)
+        );
+        // kakao.maps.event.addListener(
+        //   marker,
+        //   "mouseover",
+        //   this.makeOverListener(this.map, marker, infowindow)
+        // );
+        // kakao.maps.event.addListener(
+        //   marker,
+        //   "mouseout",
+        //   this.makeOutListener(infowindow)
+        // );
+      }
+      this.markerPositions = [];
+      this.markers = [];
     },
+    makeClickListener(map, marker, infowindow) {
+      return function () {
+        infowindow.open(map, marker);
+      };
+    },
+    // makeOverListener(map, marker, infowindow) {
+    //   return function () {
+    //     infowindow.open(map, marker);
+    //   };
+    // },
+    // makeOutListener(infowindow) {
+    //   return function () {
+    //     infowindow.close();
+    //   };
+    // },
     setHouseSet() {
       this.houseSet = [];
       this.houseList.forEach((el) => {
@@ -343,7 +419,7 @@ export default {
         "SET_HOUSE_TOTAL_LIST_ITEM_COUNT",
         this.houseSet.length
       );
-      this.setLimit(1);
+      this.movePage(1);
     },
     getHouseDetail(houseName, lat, lng) {
       this.houseDetailList = [];
@@ -366,8 +442,8 @@ export default {
         return true;
       }
     },
-    isEmptyHouseSet: function () {
-      if (this.houseSet.length == 0 && this.selectDong != "") {
+    isEmptyHousePageList: function () {
+      if (this.housePageList.length == 0 && this.selectDong != "") {
         return true;
       } else {
         return false;
