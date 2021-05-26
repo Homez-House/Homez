@@ -115,7 +115,7 @@ export default {
 
       var cnt = attachFiles.files.length;
       for (var i = 0; i < cnt; i++) {
-        formData.append("file", attachFiles[i]);
+        formData.append("file", attachFiles.files[i]);
       }
 
       http
