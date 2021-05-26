@@ -5,7 +5,7 @@
     <div class="table-div pb-3" style="min-height: 600px">
       <div class="text-center">
         <img
-          style="border-radius: 50%; width: 300px"
+          style="border-radius: 20px; width: 300px"
           :src="memberProfile"
           alt="프로필 사진"
         />
@@ -20,6 +20,7 @@
               class="form-control"
               aria-describedby="inputGroupFileAddon04"
               aria-label="Upload"
+              @change="insertFile"
             />
           </div>
           <div class="row mb-4 form-group">
@@ -167,6 +168,15 @@ export default {
     };
   },
   methods: {
+    insertFile(fileEvent) {
+      if (fileEvent.target.files && fileEvent.target.files.length > 0) {
+        for (var i = 0; i < fileEvent.target.files.length; i++) {
+          const file = fileEvent.target.files[i];
+          this.memberProfile = URL.createObjectURL(file);
+          console.log(this.memberProfile);
+        }
+      }
+    },
     selectGugunData(event) {
       this.memberInterestArea = 0;
       console.log(event.target.value);
