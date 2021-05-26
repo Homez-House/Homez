@@ -4,6 +4,7 @@ import VueRouter from "vue-router";
 Vue.use(VueRouter);
 
 import About from '@/components/About.vue';
+import Admin from '@/components/Admin.vue';
 import House from '@/components/House.vue';
 import Login from '@/components/Login.vue';
 import MainContent from '@/components/MainContent.vue';
@@ -17,6 +18,7 @@ export default new VueRouter({
   routes: [
     { path: '/', name: 'MainContent', component: MainContent },
     { path: '/about', name: 'About', component: About },
+    { path: '/admin', name: 'Admin', component: Admin },
     { path: '/notice', name: 'Notice', component: Notice },
     { path: '/house', name: 'House', component: House },
     { path: '/login', name: 'Login', component: Login },
