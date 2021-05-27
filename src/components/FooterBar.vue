@@ -38,16 +38,16 @@
             Dev. History
           </h2>
           <ul class="list-unstyled text-light footer-link-list">
-            <li><a class="text-decoration-none" href="#">프로젝트 협업</a></li>
-            <li><a class="text-decoration-none" href="#">요구사항 정리</a></li>
-            <li><a class="text-decoration-none" href="#">API 문서</a></li>
+            <li><a class="text-decoration-none" href="https://www.notion.so/danghyeona/1-FINAL-PJT-00c83ffe69854a7b8f41a41a69763edc">프로젝트 협업</a></li>
+            <li><a class="text-decoration-none" href="https://www.notion.so/danghyeona/e72832fb74a24b409843c2be01f4f4be">요구사항 정리</a></li>
+            <li><a class="text-decoration-none" href="https://www.notion.so/danghyeona/API-e3912a07fe8a4a8aacaadb41a18b50a1">API 문서</a></li>
             <li>
-              <a class="text-decoration-none" href="#">ERD 테이블 구조</a>
+              <a class="text-decoration-none" href="https://www.notion.so/danghyeona/ERD-aa9ed08ba3a84ce38106f00ac3182da8">ERD 테이블 구조</a>
             </li>
             <li>
-              <a class="text-decoration-none" href="#">클래스 다이어그램</a>
+              <a class="text-decoration-none" href="https://www.notion.so/danghyeona/846c2784970442ac815aa941a6c25d03">클래스 다이어그램</a>
             </li>
-            <li><a class="text-decoration-none" href="#">화면 설계서</a></li>
+            <li><a class="text-decoration-none" href="https://www.notion.so/danghyeona/a15401a7ce4d482993c696085d6f595e">화면 설계서</a></li>
           </ul>
         </div>
 
