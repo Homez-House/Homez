@@ -140,3 +140,30 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.pagination > li > a {
+  background-color: white;
+  color: #59ab6e;
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover {
+  color: #000000;
+  background-color: #eee;
+  border-color: #ddd;
+}
+
+.pagination > .active > a {
+  color: white;
+  background-color: #59ab6e !important;
+  border: solid 1px #59ab6e !important;
+}
+
+.pagination > .active > a:hover {
+  background-color: #59ab6e !important;
+  border: solid 1px #59ab6e;
+}
+</style>

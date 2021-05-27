@@ -1,6 +1,6 @@
 <template>
-  <nav aria-label="Page navigation" class="my-5">
-    <ul class="pagination justify-content-center">
+  <nav aria-label="Page navigation" class="my-3">
+    <ul class="pagination justify-content-center mb-0">
       <li v-if="prev" class="page-item">
         <a
           class="page-link"
@@ -140,3 +140,34 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.pagination > li > a
+{
+    background-color: white;
+    color: #59ab6e;
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover
+{
+    color: #000000;
+    background-color: #eee;
+    border-color: #ddd;
+}
+
+.pagination > .active > a
+{
+    color: white;
+    background-color: #59ab6e !Important;
+    border: solid 1px #59ab6e !Important;
+}
+
+.pagination > .active > a:hover
+{
+    background-color: #59ab6e !Important;
+    border: solid 1px #59ab6e;
+}
+</style>

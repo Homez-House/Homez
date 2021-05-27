@@ -23,7 +23,7 @@
 
       <div
         class="
-          align-self-center
+          align-self-centerr
           collapse
           navbar-collapse
           flex-fill
@@ -72,8 +72,28 @@
             <router-link
               class="nav-icon position-relative text-decoration-none"
               to="/mypage"
+              v-if="$store.state.login.memberType === '002'"
             >
               <i class="fas fa-address-card"></i>
+              <span
+                class="
+                  position-absolute
+                  top-0
+                  left-100
+                  translate-middle
+                  badge
+                  rounded-pill
+                  bg-light
+                  text-dark
+                "
+              ></span>
+            </router-link>
+            <router-link
+              to="/admin"
+              class="nav-icon position-relative text-decoration-none"
+              v-if="$store.state.login.memberType === '001'"
+            >
+              <i class="fas fa-users-cog"></i>
               <span
                 class="
                   position-absolute
