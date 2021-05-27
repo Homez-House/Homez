@@ -26,10 +26,11 @@ public class WebMvcConfig implements WebMvcConfigurer{
 				"/login/**", 
 				"/register/**",
 				"/member/**",
-				"/notice/**",
+//				"/notice/**",
 				"/dong/**",
 				"/codes/**",
-				"/gugun/**"); // static folder
+				"/gugun/**",
+				"/houses/**"); // static folder
 	}
 	
 //	@Override
@@ -37,7 +38,7 @@ public class WebMvcConfig implements WebMvcConfigurer{
 //        registry.addResourceHandler("/").
 //                  addResourceLocations("classpath:/static/index.html");
 //    }
-	
+//	
 //	@Override
 //	public void addViewControllers(ViewControllerRegistry registry) {
 //	    registry.addViewController("/").setViewName("forward:/index.html");

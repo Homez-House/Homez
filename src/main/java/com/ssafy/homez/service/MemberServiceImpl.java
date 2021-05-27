@@ -45,6 +45,10 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public int insert(MemberDto dto, MultipartHttpServletRequest request) {
 		try {
+			File uploadDir = new File(uploadPath + File.separator + uploadFolder);
+			if(!uploadDir.exists()) uploadDir.mkdir();
+			
+			
 			MultipartFile part = request.getFiles("file").get(0);
 			String fileName = part.getOriginalFilename();
 			UUID uuid = UUID.randomUUID();
@@ -66,11 +70,19 @@ public class MemberServiceImpl implements MemberService{
 	public int update(MemberDto dto, MultipartHttpServletRequest request) {
 		try {
 			String deleteFileUrl = memberDao.detail(dto.getMemberId()).getMemberProfile();
+			File uploadDir = new File(uploadPath + File.separator + uploadFolder);
+			if(!uploadDir.exists()) uploadDir.mkdir();
 			
-			File file = new File(uploadPath + File.separator, deleteFileUrl);
-			if(file.exists()) {
-				file.delete();
-			}
+			
+			File file = null;
+	        if(deleteFileUrl != null) {
+	           file = new File(uploadPath + File.separator, deleteFileUrl);
+	        
+	           System.out.println("2-2. update!!!!! ----------------- "+dto);
+	           if(file.exists()) {
+	              file.delete();
+	           }
+	        }
 			
 			// 수정
 			MultipartFile part = request.getFiles("file").get(0);
