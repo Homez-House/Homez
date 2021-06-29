@@ -197,7 +197,7 @@
         <!-- 맵 -->
         <section id="map_wrap">
           <div id="map" style="height: 800px">
-            <ul id="category">
+            <ul id="category" style="padding: 5px">
               <li id="BK9" data-order="0">
                 <span class="category_bg bank"></span>
                 은행
@@ -210,7 +210,7 @@
                 <span class="category_bg pharmacy"></span>
                 약국
               </li>
-              <li id="OL7" data-order="3">
+              <li id="OL7" data-order="3" style="width: 65px">
                 <span class="category_bg oil"></span>
                 주유소
               </li>
@@ -218,7 +218,7 @@
                 <span class="category_bg cafe"></span>
                 카페
               </li>
-              <li id="CS2" data-order="5">
+              <li id="CS2" data-order="5" style="width: 65px">
                 <span class="category_bg store"></span>
                 편의점
               </li>
