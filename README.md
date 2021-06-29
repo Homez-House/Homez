@@ -93,11 +93,11 @@ back-end/
 
 ### 4️⃣ 프로젝트 화면
 
-**첫화면**
+**첫화면**<br>
 ![00  첫화면](https://user-images.githubusercontent.com/45550607/123820747-c6fe9800-d935-11eb-856f-5b5b680f45fb.png)
 
-**주택매매 검색 - 성공**
+**주택매매 검색 - 성공**<br>
 ![08  주택 검색 - 성공](https://user-images.githubusercontent.com/45550607/123820796-cebe3c80-d935-11eb-8f8f-ea6ad0a3cdb7.png)
 
-**관리자 계정 - 신규가입 선 그래프**
+**관리자 계정 - 신규가입 선 그래프**<br>
 ![12  신규가입 선 그래프](https://user-images.githubusercontent.com/45550607/123820766-c8c85b80-d935-11eb-86f8-9ffc6a33511f.png)
