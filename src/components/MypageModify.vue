@@ -152,6 +152,7 @@ export default {
   name: "MypageModify",
   data: function () {
     return {
+      // store 값으로 세팅
       memberId: this.$store.state.login.memberId,
       memberPwd: "",
       memberPwdMore: "",
@@ -176,6 +177,7 @@ export default {
   },
   methods: {
     insertFile(fileEvent) {
+      // 프로필 이미지 파일을 URL Object로 만들어준다.
       if (fileEvent.target.files && fileEvent.target.files.length > 0) {
         for (var i = 0; i < fileEvent.target.files.length; i++) {
           const file = fileEvent.target.files[i];
@@ -184,14 +186,15 @@ export default {
       }
     },
     selectGugunData(event) {
+      // 구/군 리스트를 가져온다.
       this.memberInterestArea = 0;
       console.log(event.target.value);
       http.get("/gugun/" + this.selectGugun).then(({ data }) => {
         this.DongList = data;
-        console.log(data);
       });
     },
     updateMember() {
+      // 회원 수정 버튼을 눌렀을 때
       if (this.memberPwd.length < 8 || this.memberPwd !== this.memberPwdMore) {
         this.$alertify.alert("업데이트 불가", "비밀번호를 확인해주세요!");
         return;
@@ -212,7 +215,6 @@ export default {
       formData.append("memberInterestArea", this.memberInterestArea);
       formData.append("memberType", this.memberType);
       formData.append("file", attachFiles.files[0]);
-      console.log(attachFiles.files[0]);
       http
         .put("/member/" + this.memberId, formData, {
           headers: {
@@ -220,7 +222,6 @@ export default {
           },
         })
         .then(({ data }) => {
-          console.log("Member Update : " + data);
           this.$store.commit("SET_UPDATE", {
             memberName: data.memberName,
             memberPwd: data.memberPwd,
@@ -242,22 +243,23 @@ export default {
     },
   },
   created: function () {
+    // 성별 리스트 중 회원의 정보와 동일한 값으로 설정
     http.get("/codes", { params: { groupCode: "002" } }).then(({ data }) => {
       this.GenderList = data;
-      console.log(this.GenderList);
     });
 
+    // 연령대 리스트 중 회원의 정보와 동일한 값으로 설정
     http.get("/codes", { params: { groupCode: "003" } }).then(({ data }) => {
       this.Agelist = data;
-      console.log(this.Agelist);
     });
 
     http.get("/gugun").then(({ data }) => {
+      // 현재 유저가 관심있는 지역의 앞 4글자가 구/군 코드임을 활용
       let str = this.$store.state.login.memberInterestArea;
-      console.log(data);
-      this.GugunList = data;
+      this.GugunList = data;// 구/군 리스트 업데이트
       this.selectGugun = str.substring(0, 5);
 
+      // 구해진 구/군 코드를 활용해 동 리스트 업데이트
       http.get("/gugun/" + this.selectGugun).then(({ data }) => {
         this.DongList = data;
       });

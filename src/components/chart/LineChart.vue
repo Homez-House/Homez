@@ -61,22 +61,22 @@ export default {
       },
     };
   },
-  mounted() {
-    // this.chartData.datasets.data = this.tempData;
-  },
   created() {
+    // 데이터 자료구조 생성
     let count = [];
-    console.log("Line Chart Created");
     for (let i = 0; i < 12; i++) count.push(0);
+
+    // 회원 정보 호출
     http.get("/member").then(({ data }) => {
       data.forEach((element) => {
+        // joindate : YYYY-MM-DD HH:MM:SS
+        // MM을 추출해서 카운트
         let idx = Number(element.memberJoindate.split("-")[1]) - 1;
         count[idx] += 1;
       });
-      count.shift();
-      console.log(this.chartData.datasets[0].data);
-      this.chartData.datasets[0].data = count;
-      this.renderChart(this.chartData, this.options);
+      count.shift(); // 불필요한 0 인덱스 삭제
+      this.chartData.datasets[0].data = count; // chart data setting
+      this.renderChart(this.chartData, this.options); // chart rendering
     });
   },
 };

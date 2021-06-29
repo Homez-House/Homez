@@ -65,31 +65,30 @@ export default {
     this.renderChart(this.chartData, this.options);
   },
   created() {
+    // 데이터 정렬 자료구조 생성
     let count = [];
-    console.log("BarChar created");
     for (let i = 0; i <= 6; i++) count.push(0);
 
+    // 회원 정보 호출
     http.get("/member").then(({ data }) => {
       data.forEach((element) => {
         let idx = Number(element.memberAge);
         count[idx] += 1;
       });
-      count.shift();
-      this.chartData.datasets[0].data = count;
+      count.shift(); // 불필요한 0 인덱스를 삭제
+      this.chartData.datasets[0].data = count; // chart data setting
 
+      // 비동기 구조로 인해 앞 과정이 끝난 이후에 수행
       http.get("/codes", { params: { groupCode: "003" } }).then(({ data }) => {
+        // 003 : 연령대
         let label = [];
         data.forEach((element) => {
-          console.log(element.codeName);
           label.push(element.codeName);
         });
-        console.log(label);
-        this.chartData.labels = label;
-        this.renderChart(this.chartData, this.options);
+        this.chartData.labels = label; // chart label setting
+        this.renderChart(this.chartData, this.options); //rendering
       });
     });
-
-    console.log("BarChar created End");
   },
 };
 </script>

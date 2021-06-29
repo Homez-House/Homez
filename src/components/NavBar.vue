@@ -161,7 +161,6 @@ export default {
   methods: {
     logout() {
       http.get("/logout").then(({ data }) => {
-        //alert("로그아웃 성공!");
         console.log("Logout : " + data);
       });
     },

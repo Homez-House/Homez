@@ -38,31 +38,31 @@ export default {
     this.renderChart(this.chartData, this.options);
   },
   created() {
+    // 데이터 자료 구조
     let count = [];
-    console.log("Pie created");
     for (let i = 0; i <= 6; i++) count.push(0);
 
+    // 회원 정보 호출
     http.get("/member").then(({ data }) => {
+      // 정보 카운트
       data.forEach((element) => {
         let idx = Number(element.memberGender);
         count[idx] += 1;
       });
-      count.shift();
-      this.chartData.datasets[0].data = count;
+      count.shift(); // 불필요한 0 인덱스 삭제
+      this.chartData.datasets[0].data = count; // chart data setting
 
+      // 비동기 방식으로 회원 정보 후 사용되도록 함
       http.get("/codes", { params: { groupCode: "002" } }).then(({ data }) => {
+        // 002 : gender
         let label = [];
         data.forEach((element) => {
-          console.log(element.codeName);
           label.push(element.codeName);
         });
-        console.log(label);
-        this.chartData.labels = label;
-        this.renderChart(this.chartData, this.options);
+        this.chartData.labels = label; // chart label setting
+        this.renderChart(this.chartData, this.options); // chart rendering
       });
     });
-
-    console.log("Pie created End");
   },
 };
 </script>

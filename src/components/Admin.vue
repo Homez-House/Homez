@@ -55,6 +55,7 @@ export default {
       memberGenderList: [],
       memberAgeList: [],
 
+      // 원하는 값이 정상적으로 모두 업데이트가 되었는지 확인하는 변수
       isMemberList: false,
       isMemberTypeList: false,
       isMemberGenderList: false,
@@ -62,29 +63,28 @@ export default {
     };
   },
   methods: {
+    // 각 공통코드 자리에 값을 업데이트한다.
     memberListModify() {
       this.memberList.forEach((oneMember) => {
         this.memberTypeList.forEach((oneType) => {
           if (oneMember.memberType === oneType.code)
             oneMember.memberType = oneType.codeName;
-          //console.log(oneType.code+" "+ oneType.codeName);
         });
 
         this.memberGenderList.forEach((oneGender) => {
           if (oneMember.memberGender === oneGender.code)
             oneMember.memberGender = oneGender.codeName;
-          //console.log(oneGender.code+" "+ oneGender.codeName);
         });
 
         this.memberAgeList.forEach((oneAge) => {
           if (oneMember.memberAge === oneAge.code)
             oneMember.memberAge = oneAge.codeName;
-          //console.log(oneAge.code+" "+ oneAge.codeName);
         });
       });
     },
   },
   computed: {
+    // 변동사항을 확인해 현재 리스트 값이 모두 업데이트 되면 true 반환
     isAllCheck: function () {
       if (
         this.isMemberList &&
@@ -98,41 +98,30 @@ export default {
     },
   },
   created() {
+    // 회원 정보 호출
     http.get("/member").then(({ data }) => {
       this.memberList = data;
       this.isMemberList = true;
-      // data.forEach(element => {
-      //   console.log(element);
-      // });
     });
 
+    // 회원 구분(001)에 따라 값 저장
     http.get("/codes", { params: { groupCode: "001" } }).then(({ data }) => {
       this.memberTypeList = data;
       this.isMemberTypeList = true;
-      //console.log("Type : " + data);
-      // data.forEach(element => {
-      //   console.log(element);
-      // });
     });
 
+    // 회원 성별(002)에 따라 값 저장
     http.get("/codes", { params: { groupCode: "002" } }).then(({ data }) => {
       this.memberGenderList = data;
       this.isMemberGenderList = true;
-      //console.log("Gender : " + data);
-      // data.forEach(element => {
-      //   console.log(element);
-      // });
     });
 
+    // 회원 연령대(003)에 따라 값 저장
     http.get("/codes", { params: { groupCode: "003" } }).then(({ data }) => {
       this.memberAgeList = data;
       this.isMemberAgeList = true;
-      //console.log("Age : " + data);
-      // data.forEach(element => {
-      //   console.log(element);
-      // });
-
       this.memberListModify();
+      // 가장 마지막에 끝나면 001~003에 따라 회원 정보를 업데이트
     });
   },
 };

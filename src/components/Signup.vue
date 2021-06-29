@@ -235,6 +235,7 @@ export default {
     };
   },
   computed: {
+    // 현재 값들이 모두 유효한 값인지 확인 - 빈 값 확인, 유효범위 확인
     isIDFocusAndValid() {
       return this.isIDFocus && this.isIDValid;
     },
@@ -267,37 +268,34 @@ export default {
     },
   },
   methods: {
+    // 유효범위 확인 함수
     validateID() {
       this.isIDValid = this.memberId.length >= 4 ? true : false;
-      console.log(this.isIDValid);
     },
     validatePwd() {
       this.isPwdValid = this.memberPwd.length >= 8 ? true : false;
-      console.log(this.isPwdValid);
     },
     validatePwdMore() {
       this.isPwdMoreValid = this.memberPwd == this.memberPwdMore ? true : false;
-      console.log(this.isPwdMoreValid);
     },
     validateName() {
       this.isNameValid = this.memberName.length > 0 ? true : false;
-      console.log(this.isNameValid);
     },
     validateEmail() {
       let regexp =
         /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
       this.isEmailValid = regexp.test(this.memberEmail) ? true : false;
-      console.log(this.isEmailValid);
     },
     selectGugunData(event) {
+      // 구/군을 선택하면 그에 알맞는 동 리스트를 구해와서 세팅함
       this.memberInterestArea = 0;
       console.log(event.target.value);
       http.get("/gugun/" + this.selectGugun).then(({ data }) => {
         this.DongList = data;
-        console.log(data);
       });
     },
     SingUpBtn() {
+      // 회원가입 버튼을 눌렀을 때, 에러 케이스
       if (
         !this.isIDValid ||
         !this.isPwdValid ||
@@ -321,6 +319,7 @@ export default {
         return;
       }
 
+      // 정상적인 입력 값일 때
       var formData = new FormData();
       var attachFiles = document.querySelector("#inputFileUploadInsert");
       formData.append("memberId", this.memberId);
@@ -356,19 +355,19 @@ export default {
     },
   },
   created: function () {
+    // 성별 리스트 받아오기
     http.get("/codes", { params: { groupCode: "002" } }).then(({ data }) => {
       this.GenderList = data;
-      console.log(this.GenderList);
     });
 
+    // 연령대 리스트 받아오기
     http.get("/codes", { params: { groupCode: "003" } }).then(({ data }) => {
       this.Agelist = data;
-      console.log(this.Agelist);
     });
 
+    // 구/군 리스트 받아오기
     http.get("/gugun").then(({ data }) => {
       console.log(data);
-      this.GugunList = data;
     });
   },
 };

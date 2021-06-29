@@ -129,8 +129,7 @@ export default {
           },
         })
         .then(({ data }) => {
-          console.log("DetailModalVue: data: ");
-          console.log(data);
+          console.log("DetailModalVue: data: ", data);
 
           if (data.result == "login") {
             this.$router.push("/login");
@@ -149,8 +148,7 @@ export default {
           }
         })
         .catch((error) => {
-          console.log("DetailModalVue: error ");
-          console.log(error);
+          console.log("DetailModalVue: error ", error);
         });
     },
 
@@ -183,8 +181,7 @@ export default {
       http
         .delete("/notice/" + this.$store.state.notice.noticeNo)
         .then(({ data }) => {
-          console.log("noticeMainVue: data : ");
-          console.log(data);
+          console.log("noticeMainVue: data : ", data);
           if (data.result == "login") {
             this.$router.push("/login");
           } else {
