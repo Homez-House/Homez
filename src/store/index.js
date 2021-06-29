@@ -117,8 +117,6 @@ export default new Vuex.Store({
       state.house.limit =
         10 -
         (payload.pageIndex * 10 > payload.length ? payload.pageIndex * 10 - payload.length : 0);
-      console.log(payload.pageIndex * 10 + "=====" + payload.length);
-      console.log(state.house.limit);
     },
     SET_NOTICE_DETAIL(state, payload) {
       state.notice.noticeNo = payload.noticeNo;

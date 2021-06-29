@@ -372,19 +372,15 @@ export default {
     displayMarker() {
       // this.initMap();
       this.mapMarkers.forEach((mapMarker) => {
-        console.log(mapMarker);
         mapMarker.setMap(null);
       });
       this.markers.forEach((mapMarker) => {
-        console.log(mapMarker);
         mapMarker.setMap(null);
       });
-      console.log("mapMarkers length--" + this.mapMarkers.length);
       this.mapMarkers = [];
       this.markerPositions = [];
       this.markers = [];
 
-      console.log("------------------------");
       if (this.markers.length > 0) {
         this.markers.forEach((marker) => marker.setMap(null));
       }
@@ -750,11 +746,7 @@ export default {
     // 카테고리를 클릭했을 때 호출되는 함수입니다
     function onClickCategory() {
       var id = this.id,
-        className = this.className,
-        dd = this.dd;
-      console.log(dd);
-      console.log("id----" + id);
-      console.log("className----" + className);
+        className = this.className;
 
       placeOverlay.setMap(null);
 
