@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<mapper namespace="com.ssafy.homez.dao.MemberDao">
+    
+    <insert id="insert" parameterType="com.ssafy.homez.dto.MemberDto">
+    	insert into 
+    	member (member_id, member_name, member_pwd, member_email, member_interest_area, member_joindate, member_profile, member_gender, member_age, member_type)
+    	values (#{memberId}, #{memberName}, #{memberPwd}, #{memberEmail}, #{memberInterestArea}, now(), #{memberProfile}, #{memberGender}, #{memberAge}, "002")
+    </insert>
+    
+    <select id="list" resultType="com.ssafy.homez.dto.MemberDto">
+        select * from member
+    </select>
+    
+    <update id="update" parameterType="com.ssafy.homez.dto.MemberDto">
+    	update member 
+    	   set member_name = #{memberName},
+    			member_pwd = #{memberPwd},
+    			member_email = #{memberEmail},
+    			member_interest_area = #{memberInterestArea},
+    			member_profile = #{memberProfile},
+    			member_gender = #{memberGender},
+    			member_age = #{memberAge}
+    	 where member_id = #{memberId} 
+    </update>
+    
+    <delete id="delete">
+    	delete from member
+    	 where member_id = #{memberId}
+    </delete>
+    
+    <select id="detail" resultType="com.ssafy.homez.dto.MemberDto" parameterType="String">
+        select *
+          from member 
+         where member_id = #{memberId} 
+    </select>
+    
+</mapper>

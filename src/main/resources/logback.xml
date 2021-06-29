@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-3level %logger{5} - %msg %n</Pattern>
+        </layout>
+    </appender>
+    
+    <appender name="RollingAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>C:/SSAFY/SpringBoot-FrameWork-Workspace/Homez/src/main/resources/log/app.%d{yyyy-MM-dd}.log</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-3level %logger{5} - %msg %n</pattern>
+        </encoder>
+    </appender>
+
+	<!-- 내가 개발한 application -->
+	<!-- console 에만 -->
+	<logger name="com.mycom.myboard" level="DEBUG" appender-ref="console" />
+
+    <root level="INFO">
+    	<appender-ref ref="console" />
+        <appender-ref ref="RollingAppender" />
+    </root>
+</configuration>
