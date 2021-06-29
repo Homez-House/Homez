@@ -1,8 +1,10 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
+// vue에서 router를 쓰기 위한 코드
 Vue.use(VueRouter);
 
+// vue import
 import About from "@/components/About.vue";
 import Admin from "@/components/Admin.vue";
 import House from "@/components/House.vue";
@@ -14,11 +16,13 @@ import MypageModify from "@/components/MypageModify.vue";
 import Notice from "@/components/Notice.vue";
 import Signup from "@/components/Signup.vue";
 
+// routes 설계
 export default new VueRouter({
   routes: [
     { path: "/", name: "MainContent", component: MainContent },
     { path: "/about", name: "About", component: About },
     {
+      // nest-route 구조
       path: "/admin",
       name: "Admin",
       component: Admin,

@@ -1,9 +1,10 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
+// vuex를 사용하기 위한 코드
 Vue.use(Vuex);
 
-// action, axios 작업할 때 주석 풀기
+// axios import
 import http from "@/common/axios.js";
 import router from "@/router";
 
