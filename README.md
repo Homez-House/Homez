@@ -75,29 +75,3 @@ back-end/
   gradlw.bat
   settings.gradle
 ```
-
-<br>
-
-### 2️⃣ Database 구성
-
-![image](https://user-images.githubusercontent.com/45550607/123820513-9b7bad80-d935-11eb-9232-9903a0739d63.png)
-
-<br><br>
-
-### 3️⃣ 자료
-
-- 산출물 : [요구조건](https://docs.google.com/document/d/1p-SGSSefXCOUUcknbobOb2VE--ZSoSpjk0fYEuX49ak/edit?usp=sharing) | [요구사항정의서](https://docs.google.com/spreadsheets/d/1WpeoD_AWJMRUXC347Wqrz-eq-tYtPQd87targpkAoNo/edit?usp=sharing) | [프로젝트흐름도](https://www.figma.com/file/5bNSRQgHkd11eruEllCMqd/Homez?node-id=0%3A1) | [개발일정정리](https://docs.google.com/spreadsheets/d/1wRDpXA7T7uTvxhGH3w3dI8ZHN5hW0lQ2iZnWQf3DqbU/edit?usp=sharing) | [테스트케이스](https://docs.google.com/spreadsheets/d/1Oo7_bG9lv-PPGNL2pPxGTwaPpJNvsywQorQu2lWpQOo/edit?usp=sharing)
-- **최종 발표**
-![image](https://user-images.githubusercontent.com/45550607/123815713-a9c7ca80-d931-11eb-85d8-83aca084fc29.png)
-<br>
-
-### 4️⃣ 프로젝트 화면
-
-**첫화면**<br>
-![00  첫화면](https://user-images.githubusercontent.com/45550607/123820747-c6fe9800-d935-11eb-856f-5b5b680f45fb.png)
-
-**주택매매 검색 - 성공**<br>
-![08  주택 검색 - 성공](https://user-images.githubusercontent.com/45550607/123820796-cebe3c80-d935-11eb-8f8f-ea6ad0a3cdb7.png)
-
-**관리자 계정 - 신규가입 선 그래프**<br>
-![12  신규가입 선 그래프](https://user-images.githubusercontent.com/45550607/123820766-c8c85b80-d935-11eb-86f8-9ffc6a33511f.png)
